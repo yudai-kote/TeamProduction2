@@ -1,22 +1,20 @@
 #pragma once
-#include "../../lib/framework.hpp"
 #include "../../Share/Share.h"
 #include "../../Classbase.h"
 
-class Title : public Classbase{
 
+class Chara : public Classbase{
 private:
 
 
-public:
 
-	Title();
+public:
+	Chara();
 
 	void Setup();
 	void Update();
 	void Draw();
-	Scenename Shift();
-
 
 
 };
+
