@@ -48,7 +48,7 @@ void Scenemanager::Shift(){
 
 		break;
 	case Scenename::GAMEMANAGER:
-		scenechange = gamemanager_.TitleShift();
+		scenechange = gamemanager_.Titleshift();
 
 		break;
 	}
