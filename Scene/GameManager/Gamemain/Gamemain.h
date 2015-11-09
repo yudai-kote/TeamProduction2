@@ -1,9 +1,10 @@
 #include "../../../Share/Share.h"
+#include "../../../Map/Map.h"
 class Gamemain{
-public:
-
 private:
+	Map map_;
+public:
 	void Update();
 	void Draw();
-	void Shift();
+	Scenename Shift();
 };

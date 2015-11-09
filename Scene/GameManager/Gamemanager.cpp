@@ -1,8 +1,8 @@
 #include "Gamemanager.h"
 
 Gamemanager::Gamemanager(){
-
-
+	
+	gamechange = Scenename::UNITSELECT;
 
 }
 
@@ -33,7 +33,7 @@ void Gamemanager::Draw(){
 
 		break;
 	case Scenename::GAMEMAIN:
-
+		gamemain_.Draw();
 		break;
 	case Scenename::RESULT:
 
@@ -44,7 +44,24 @@ void Gamemanager::Draw(){
 }
 
 
+void Gamemanager::Shift(){
+	switch (gamechange)
+	{
+	case Scenename::UNITSELECT:
+		gamechange = unitselect_.Shift();
+		break;
+	case Scenename::GAMEMAIN:
+		gamechange = gamemain_.Shift();
+		break;
+	case Scenename::RESULT:
+
+		break;
+	}
+}
+
 Scenename Gamemanager::Titleshift(){
-	if (env.isPushKey(GLFW_KEY_ENTER))
+	if (env.isPushKey(GLFW_KEY_ENTER)){
 		return Scenename::TITLE;
+	}
+	return Scenename::GAMEMANAGER;
 }
