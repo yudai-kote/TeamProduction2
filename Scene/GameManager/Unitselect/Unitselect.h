@@ -14,8 +14,5 @@ public:
 	void Setup();
 	void Update();
 	void Draw();
-
-
-
-
+	void Shift();
 };
