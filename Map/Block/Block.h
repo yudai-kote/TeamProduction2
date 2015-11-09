@@ -2,11 +2,13 @@
 #include "../../Classbase.h"
 #include "../../Share/Share.h"
 
-enum Maptype
-{
-	LOAD,
-	NONE
-};
+//share‚É’Ç‰Á‚·‚é•ª
+
+
+
+//
+
+
 
 class Block : public Classbase
 {
