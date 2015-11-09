@@ -10,7 +10,9 @@ int main() {
 	Scenemanager_.Setup();
 
 	while (env.isOpen()) {
-		
+
+		Gamecount::GameCount(0); // ここで増やす処理を書く
+
 		Scenemanager_.Shift();
 		Scenemanager_.Update();
 		env.begin();
@@ -18,6 +20,10 @@ int main() {
 		Scenemanager_.Draw();
 
 
+
+
+
+		//std::cout << Gamecount::GameCount() << std::endl;
 		env.end();
-  }
+	}
 }

@@ -2,12 +2,14 @@
 #include "../../Share/Share.h"
 #include "Unitselect/Unitselect.h"
 #include "../../Classbase.h"
+#include "Gamemain/Gamemain.h"
 
 class Gamemanager : public Classbase{
 
 private:
 
 	Unitselect unitselect_;
+	Gamemain gamemain_;
 	Scenename gamechange;
 
 public:
