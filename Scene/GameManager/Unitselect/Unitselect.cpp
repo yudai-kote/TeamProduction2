@@ -26,4 +26,6 @@ void Unitselect::Draw(){
 
 }
 
+void Unitselect::Shift(){
 
+}

@@ -3,12 +3,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 
 #define env App::Get()
 #define pose Gamecount::GameCount()
+#define CHIPSIZE_X (128)
+#define CHIPSIZE_Y (64)
 
+enum Maptype
+{
+	LOAD,
+	NONE
+};
 
-enum WindowSize{
+enum Windowsize{
 	WIDTH = 1920,
 	HEIGHT = 1080,
 };
@@ -75,9 +83,14 @@ public:
 				}
 			}
 
-			
+
 			return 0;
 		}
 	}
 };
 
+struct Unitlist
+{
+	int num;
+	Vec2i pos;
+};
