@@ -1,5 +1,4 @@
 #pragma once
-#include "../../lib/framework.hpp"
 #include "../../Share/Share.h"
 #include "Unitselect/Unitselect.h"
 #include "../../Classbase.h"
@@ -18,7 +17,7 @@ public:
 	void Update();
 	void Draw();
 	void Shift();
-	Scenename TitleShift();
+	Scenename Titleshift();
 
 
 };

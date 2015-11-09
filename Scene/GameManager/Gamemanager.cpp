@@ -1,4 +1,4 @@
-#include "../GameManager/Gamemanager.h"
+#include "Gamemanager.h"
 
 Gamemanager::Gamemanager(){
 
@@ -44,7 +44,7 @@ void Gamemanager::Draw(){
 }
 
 
-Scenename Gamemanager::TitleShift(){
+Scenename Gamemanager::Titleshift(){
 	if (env.isPushKey(GLFW_KEY_ENTER))
 		return Scenename::TITLE;
 }

@@ -1,21 +1,17 @@
 #pragma once
 #include "../../../Share/Share.h"
-#include "../../../Classbase.h"
 
-class Unitselect : public Classbase{
 
+class Command{
 private:
 
 
+
 public:
-	Unitselect();
 
-
+	Command();
 	void Setup();
 	void Update();
 	void Draw();
-
-
-
 
 };
