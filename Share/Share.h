@@ -44,10 +44,10 @@ enum class Ismove{
 };
 
 enum class Direction{
-	UP,			//ëO
-	DOWN,		//å„ÇÎ
-	RIGHT,		//âE
-	LEFT,		//ç∂
+	NORTH,		//ñk
+	SOUTH,		//ìÏ
+	EAST,		//ìå
+	WEST,		//êº
 };
 
 class Gamecount{
@@ -93,4 +93,12 @@ struct Unitlist
 {
 	int num;
 	Vec2i pos;
+};
+
+struct Status{
+	int hp;
+	float power;
+	float magic_power;
+	float defense;
+	float magic_defense;
 };
