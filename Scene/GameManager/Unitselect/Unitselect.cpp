@@ -26,6 +26,9 @@ void Unitselect::Draw(){
 
 }
 
-void Unitselect::Shift(){
-
+Scenename Unitselect::Shift(){
+	if (env.isPushKey('A')){
+		return Scenename::GAMEMAIN;
+	}
+	return Scenename::UNITSELECT;
 }

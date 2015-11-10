@@ -1,12 +1,13 @@
 #include "Scenemanager.h"
 
 Scenemanager::Scenemanager(){
-
+	
 
 }
 
 void Scenemanager::Setup(){
 	scenechange = Scenename::TITLE;
+	
 }
 
 
@@ -19,7 +20,8 @@ void Scenemanager::Update(){
 
 		break;
 	case Scenename::GAMEMANAGER:
-
+		gamemanager_.Shift();
+		gamemanager_.Update();
 		break;
 	}
 }
@@ -34,7 +36,8 @@ void Scenemanager::Draw(){
 		break;
 
 	case Scenename::GAMEMANAGER:
-
+		
+		gamemanager_.Draw();
 		break;
 	}
 }
@@ -48,8 +51,8 @@ void Scenemanager::Shift(){
 
 		break;
 	case Scenename::GAMEMANAGER:
+		
 		scenechange = gamemanager_.Titleshift();
-
 		break;
 	}
 }
