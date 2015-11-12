@@ -42,6 +42,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 				switch (direction)
 				{
 				case Direction::NORTH:
+					for (auto enemy : enemy_list)
+					{
+						if (player.pos.x() == enemy.pos.x() &&
+							player.pos.y() - 1 == enemy.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (player.pos == player_unit.pos)
+							continue;
+
+						if (player.pos.x() == player_unit.pos.x() &&
+							player.pos.y() - 1 == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[player.pos.y() - 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -49,6 +66,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::SOUTH:
+					for (auto enemy : enemy_list)
+					{
+						if (player.pos.x() == enemy.pos.x() &&
+							player.pos.y() + 1 == enemy.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (player.pos == player_unit.pos)
+							continue;
+
+						if (player.pos.x() == player_unit.pos.x() &&
+							player.pos.y() + 1 == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[player.pos.y() + 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -56,6 +90,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::WEST:
+					for (auto enemy : enemy_list)
+					{
+						if (player.pos.x() - 1 == enemy.pos.x() &&
+							player.pos.y() == enemy.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (player.pos == player_unit.pos)
+							continue;
+
+						if (player.pos.x() - 1 == player_unit.pos.x() &&
+							player.pos.y() == player_unit.pos.y())
+							return false;
+					}
+					
 					if (chip_block[player.pos.y()][player.pos.x() - 1].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -63,6 +114,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::EAST:
+					for (auto enemy : enemy_list)
+					{
+						if (player.pos.x() + 1 == enemy.pos.x() &&
+							player.pos.y() == enemy.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (player.pos == player_unit.pos)
+							continue;
+
+						if (player.pos.x() + 1 == player_unit.pos.x() &&
+							player.pos.y() == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[player.pos.y()][player.pos.x() + 1].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -90,6 +158,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 				switch (direction)
 				{
 				case Direction::NORTH:
+					for (auto enemy_unit : enemy_list)
+					{
+						if (enemy.pos == enemy_unit.pos)
+							continue;
+
+						if (enemy.pos.x() == enemy_unit.pos.x() &&
+							enemy.pos.y() - 1 == enemy_unit.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (enemy.pos.x() == player_unit.pos.x() &&
+							enemy.pos.y() - 1 == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[enemy.pos.y() - 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -97,6 +182,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::SOUTH:
+					for (auto enemy_unit : enemy_list)
+					{
+						if (enemy.pos == enemy_unit.pos)
+							continue;
+
+						if (enemy.pos.x() == enemy_unit.pos.x() &&
+							enemy.pos.y() + 1 == enemy_unit.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (enemy.pos.x() == player_unit.pos.x() &&
+							enemy.pos.y() + 1 == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[enemy.pos.y() + 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -104,6 +206,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::WEST:
+					for (auto enemy_unit : enemy_list)
+					{
+						if (enemy.pos == enemy_unit.pos)
+							continue;
+
+						if (enemy.pos.x() - 1 == enemy_unit.pos.x() &&
+							enemy.pos.y() == enemy_unit.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (enemy.pos.x() - 1 == player_unit.pos.x() &&
+							enemy.pos.y() == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[enemy.pos.y()][enemy.pos.x() - 1].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
@@ -111,6 +230,23 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					break;
 
 				case Direction::EAST:
+					for (auto enemy_unit : enemy_list)
+					{
+						if (enemy.pos == enemy_unit.pos)
+							continue;
+
+						if (enemy.pos.x() + 1 == enemy_unit.pos.x() &&
+							enemy.pos.y() == enemy_unit.pos.y())
+							return false;
+					}
+
+					for (auto player_unit : player_list)
+					{
+						if (enemy.pos.x() + 1 == player_unit.pos.x() &&
+							enemy.pos.y() == player_unit.pos.y())
+							return false;
+					}
+
 					if (chip_block[enemy.pos.y()][enemy.pos.x() + 1].Getmaptype() == Maptype::LOAD)
 						return true;
 					else
