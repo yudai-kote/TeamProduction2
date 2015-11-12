@@ -1,12 +1,13 @@
 #include "Unitplayer.h"
 
-Unitplayer::Unitplayer(Unitlist player_unit){
-	unitlist = player_unit;
+Unitplayer::Unitplayer(){
+	
 
 }
 
-void Unitplayer::Setup(){
+void Unitplayer::Setup(Status status){
 
+	
 
 
 
@@ -23,7 +24,10 @@ void Unitplayer::Update(){
 
 void Unitplayer::Draw(){
 
-
+	drawFillBox(pos.x(), pos.y(),
+				size.x(), size.y(),
+				Color::white);
+	std::cout << pos << std::endl;
 }
 
 //****************************************************************

@@ -12,11 +12,7 @@ private:
 protected:
 	Attack attack;
 
-	enum class Job
-	{
-		WARRIOR,	//ím
-		LANCER,		//ƒ‰ƒ“ƒT[
-	};
+
 	enum class Animationtype
 	{
 		NORMAL,
@@ -32,6 +28,9 @@ protected:
 	bool is_attack;
 	Animationtype charatype;
 	Unitlist unitlist;
+
+	Status* status;
+
 
 	Status WarriorStatus(Status warrior);
 	Status LancerStatus(Status lancer);

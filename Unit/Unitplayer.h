@@ -9,11 +9,12 @@ private:
 	void Animation();
 
 
+
 public:
 
-	Unitplayer(Unitlist player_unit);
+	Unitplayer();
 
-	void Setup();
+	void Setup(Status status);
 	void Update();
 	void Draw();
 
