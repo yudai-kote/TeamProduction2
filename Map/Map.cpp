@@ -1,8 +1,13 @@
 #include "Map.h"
 
+void Map::MapDelete()
+{
+	chip_block.clear();
+}
+
 Map::Map()
 {
-	Setup(Vec2i(5, 5));
+	Setup(1, Vec2i(5, 5));
 }
 
 const void Map::Setplayerlist(Unitlist player_list)
@@ -13,15 +18,220 @@ const void Map::Setenemylist(Unitlist enemy_list)
 {
 	this->enemy_list.push_back(enemy_list);
 }
+const void Map::Sethitrange(int hit_range)
+{
+	this->hit_range = hit_range;
+}
 
-void Map::Setup(Vec2i map_num)
+bool Map::Isunitmoving(int unit_num, Direction direction)
+{
+	//player_unitÇÃà⁄ìÆîªíË
+	if (unit_num < static_cast<int>(player_list.size()))
+	{
+		for (auto player : player_list)
+		{
+			if (player.num == unit_num)
+			{
+				if (player.pos.x() < 0 ||
+					player.pos.x() > static_cast<int>(chip_block.size()) ||
+					player.pos.y() < 0 ||
+					player.pos.y() > static_cast<int>(chip_block[0].size()))
+					return false;
+
+
+				switch (direction)
+				{
+				case Direction::NORTH:
+					if (chip_block[player.pos.y() - 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::SOUTH:
+					if (chip_block[player.pos.y() + 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::WEST:
+					if (chip_block[player.pos.y()][player.pos.x() - 1].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::EAST:
+					if (chip_block[player.pos.y()][player.pos.x() + 1].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+				}
+			}
+		}
+	}
+
+	//enemy_unitÇÃà⁄ìÆîªíË
+	if (unit_num < static_cast<int>(enemy_list.size()))
+	{
+		for (auto enemy : enemy_list)
+		{
+			if (enemy.num == unit_num)
+			{
+				if (enemy.pos.x() < 0 ||
+					enemy.pos.x() > static_cast<int>(chip_block.size()) ||
+					enemy.pos.y() < 0 ||
+					enemy.pos.y() > static_cast<int>(chip_block[0].size()))
+					return false;
+
+
+				switch (direction)
+				{
+				case Direction::NORTH:
+					if (chip_block[enemy.pos.y() - 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::SOUTH:
+					if (chip_block[enemy.pos.y() + 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::WEST:
+					if (chip_block[enemy.pos.y()][enemy.pos.x() - 1].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+
+				case Direction::EAST:
+					if (chip_block[enemy.pos.y()][enemy.pos.x() + 1].Getmaptype() == Maptype::LOAD)
+						return true;
+					else
+						return false;
+					break;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Map::Isattackhit(int unit_num, Direction direction)
+{
+	//player_unitÇÃçUåÇîªíË
+	if (unit_num < static_cast<int>(player_list.size()))
+	{
+		for (auto player : player_list)
+		{
+			if (player.num == unit_num)
+			{
+				if (player.pos.x() < 0 ||
+					player.pos.x() > static_cast<int>(chip_block.size()) ||
+					player.pos.y() < 0 ||
+					player.pos.y() > static_cast<int>(chip_block[0].size()))
+					return false;
+
+				for (auto enemy : enemy_list)
+				{
+					switch (direction)
+					{
+					case Direction::NORTH:
+						if (player.pos.x() == enemy.pos.x() &&
+							player.pos.y() - 1 == enemy.pos.y())
+							return true;
+						break;
+
+					case Direction::SOUTH:
+						if (player.pos.x() == enemy.pos.x() &&
+							player.pos.y() + 1 == enemy.pos.y())
+							return true;
+						break;
+
+					case Direction::WEST:
+						if (player.pos.x() - 1 == enemy.pos.x() &&
+							player.pos.y() == enemy.pos.y())
+							return true;
+						break;
+
+					case Direction::EAST:
+						if (player.pos.x() + 1 == enemy.pos.x() &&
+							player.pos.y() == enemy.pos.y())
+							return true;
+						break;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	//enemy_unitÇÃçUåÇîªíË
+	if (unit_num < static_cast<int>(enemy_list.size()))
+	{
+		for (auto enemy : enemy_list)
+		{
+			if (enemy.num == unit_num)
+			{
+				if (enemy.pos.x() < 0 ||
+					enemy.pos.x() > static_cast<int>(chip_block.size()) ||
+					enemy.pos.y() < 0 ||
+					enemy.pos.y() > static_cast<int>(chip_block[0].size()))
+					return false;
+
+				for (auto player : player_list)
+				{
+					switch (direction)
+					{
+					case Direction::NORTH:
+						if (enemy.pos.x() == player.pos.x() &&
+							enemy.pos.y() - 1 == player.pos.y())
+							return true;
+						break;
+
+					case Direction::SOUTH:
+						if (enemy.pos.x() == player.pos.x() &&
+							enemy.pos.y() + 1 == player.pos.y())
+							return true;
+						break;
+
+					case Direction::WEST:
+						if (enemy.pos.x() - 1 == player.pos.x() &&
+							enemy.pos.y() == player.pos.y())
+							return true;
+						break;
+
+					case Direction::EAST:
+						if (enemy.pos.x() + 1 == player.pos.x() &&
+							enemy.pos.y() == player.pos.y())
+							return true;
+						break;
+					}
+				}
+
+				return false;
+			}
+		}
+	}
+
+	return false;
+}
+
+void Map::Setup(int stage, Vec2i map_num)
 {
 	chip_block = std::vector<std::vector<Block>>(map_num.y(), std::vector<Block>(map_num.x()));
 	hit_range = 0;
 
-
-	const char* map_txt = "res/map_file/test_map.txt";
-	std::ifstream* map_file = new std::ifstream(map_txt);
+	std::string file_name = "res/map_file/stage(" + std::to_string(stage) + ").txt";
+	std::ifstream* map_file = new std::ifstream(file_name);
 
 	if (map_file->fail())
 	{
@@ -42,8 +252,7 @@ void Map::Setup(Vec2i map_num)
 		}
 	}
 
-	/*delete map_txt;
-	delete map_file;*/
+	delete map_file;
 }
 
 void Map::Update()
