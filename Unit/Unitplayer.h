@@ -19,8 +19,8 @@ public:
 
 	void SetCanMove(bool can_move_);
 	void SetIsAttack(bool is_attack_);
-
 	void SetDirection(Direction ui_direction);
+
 
 };
 

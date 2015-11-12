@@ -33,7 +33,7 @@ void Gamemanager::Draw(){
 
 		break;
 	case Scenename::GAMEMAIN:
-		gamemain_.Draw();
+
 		break;
 	case Scenename::RESULT:
 
@@ -51,7 +51,10 @@ void Gamemanager::Shift(){
 		gamechange = unitselect_.Shift();
 		break;
 	case Scenename::GAMEMAIN:
-		gamechange = gamemain_.Shift();
+		if (env.isPushKey('A')){
+			gamechange = Scenename::UNITSELECT;
+		}
+		gamechange = Scenename::GAMEMAIN;
 		break;
 	case Scenename::RESULT:
 
