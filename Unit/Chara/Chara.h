@@ -26,10 +26,14 @@ protected:
 	Direction direction;
 	bool can_move;
 	bool is_attack;
-	Animationtype charatype;
-	Unitlist unitlist;
+	Animationtype chara_type;
+	Unitlist* unitlist;
 
 	Status* status;
+
+	struct Unitvalue{
+
+	};
 
 
 	Status WarriorStatus(Status warrior);

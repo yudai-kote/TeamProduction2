@@ -9,17 +9,16 @@ class Unitselect : public Classbase{
 
 private:
 	
-	//std::vector<Lancer*> v_Lancer;
-	//std::vector<Warrior*> v_Warrior;
-
 	std::list<Unitplayer*>& p_list_;
 
 	int select_job;
 
+	std::list<Vec2f> pos;
+
+
 	void SelectJob();
 	void ShiftJob();
 
-	//std::vector<Unitplayer>& memo_;
 
 public:
 
@@ -30,13 +29,6 @@ public:
 	void Update();
 	void Draw();
 	Scenename Shift();
-
-	//std::vector<Lancer*> GetLancer(){
-	//	return v_Lancer;
-	//}
-	//std::vector<Warrior*> GetWarrior(){
-	//	return v_Warrior;
-	//}
 
 
 };

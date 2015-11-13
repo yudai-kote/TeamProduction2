@@ -1,7 +1,14 @@
 #include "Unitplayer.h"
 
 Unitplayer::Unitplayer(){
-	
+	pos = Vec2f(-500,0);
+	size = Vec2f(100, 200);
+	direction = Direction::NORTH;
+	can_move = false;
+	is_attack = false;
+	chara_type = Animationtype::NORMAL;
+
+
 
 }
 
@@ -27,7 +34,7 @@ void Unitplayer::Draw(){
 	drawFillBox(pos.x(), pos.y(),
 				size.x(), size.y(),
 				Color::white);
-	std::cout << pos << std::endl;
+	//std::cout << pos << std::endl;
 }
 
 //****************************************************************
@@ -47,6 +54,9 @@ void Unitplayer::SetDirection(Direction ui_direction){
 
 }
 
+void Unitplayer::SetSelectPos(Vec2f select_pos){
+	pos += select_pos;
+}
 
 // Œü‚«‚É‚æ‚Á‚ÄˆÚ“®‚·‚éˆ—
 void Unitplayer::Move(Direction ui_direction){
@@ -145,7 +155,7 @@ void Unitplayer::Move(Direction ui_direction){
 
 void Unitplayer::Animation(){
 
-	switch (charatype)
+	switch (chara_type)
 	{
 	case Animationtype::NORMAL:
 		//CharacterAnimation(pos, size, offset_size, chara_normal, 4, 20, 0);

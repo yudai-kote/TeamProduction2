@@ -15,7 +15,7 @@ void Gamemanager::Update(){
 	switch (gamechange)
 	{
 	case Scenename::UNITSELECT:
-
+		unitselect_->Update();
 		break;
 	case Scenename::GAMEMAIN:
 
@@ -31,18 +31,18 @@ void Gamemanager::Draw(){
 	switch (gamechange)
 	{
 	case Scenename::UNITSELECT:
-		std::cout << 0 << std::endl;
-		for (auto i : l_player)
-		{
-			i->Draw();
-		}
 
+		unitselect_->Draw();
 		break;
 	case Scenename::GAMEMAIN:
 
+		for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
+		{
+			(*itr)->Draw();
+		}
 		break;
 	case Scenename::RESULT:
-
+		
 		break;
 	}
 
@@ -73,5 +73,6 @@ Scenename Gamemanager::Titleshift(){
 		//return Scenename::TITLE;
 	}
 	return Scenename::GAMEMANAGER;
+	env.flushInput();
 }
 
