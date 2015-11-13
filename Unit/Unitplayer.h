@@ -9,18 +9,22 @@ private:
 	void Animation();
 
 
+
 public:
 
-	Unitplayer(Unitlist player_unit);
+	Unitplayer();
 
-	void Setup();
+	void Setup(Status status);
 	void Update();
 	void Draw();
 
+	void SetSelectPos(Vec2f select_pos);
+
 	void SetCanMove(bool can_move_);
 	void SetIsAttack(bool is_attack_);
-
 	void SetDirection(Direction ui_direction);
+
+
 
 };
 

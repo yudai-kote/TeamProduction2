@@ -6,9 +6,8 @@
 class Player : public Chara{
 private:
 protected:
-	Command command;
 
-
+	
 
 public:
 

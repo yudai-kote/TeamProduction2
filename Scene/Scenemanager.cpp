@@ -48,7 +48,7 @@ void Scenemanager::Shift(){
 	switch (scenechange){
 	case Scenename::TITLE:
 		scenechange = title_.Shift();
-
+		env.flushInput();
 		break;
 	case Scenename::GAMEMANAGER:
 		
