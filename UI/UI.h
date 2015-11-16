@@ -27,11 +27,16 @@ public:
 	void Draw();
 	void BoardDraw();
 	void OperatePlayer();
+	void AttakPlayer(int end);
 	void Move();
 	void Animation();
 	void OperateCursor();
 	void Select();
 
+	void SetDir(Direction set);
+	void SetUnitNum(int set);
+
 	Direction GetDir();
 	int GetUnitNum();
+	bool IsAttacked();
 };

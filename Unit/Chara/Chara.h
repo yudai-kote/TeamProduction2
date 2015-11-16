@@ -9,6 +9,7 @@
 
 class Chara : public Classbase{
 private:
+
 protected:
 	Attack attack;
 
@@ -26,9 +27,12 @@ protected:
 	Direction direction;
 	bool can_move;
 	bool is_attack;
-	Animationtype chara_type;
-	Unitlist* unitlist;
+	int num;
 
+	Animationtype chara_type;
+
+	Color color;
+	Unitlist* unitlist;
 	Status* status;
 
 	struct Unitvalue{
@@ -50,6 +54,7 @@ public:
 	void Draw();
 
 	Status GetStatus();
+	Unitlist GetNum();
 
 };
 

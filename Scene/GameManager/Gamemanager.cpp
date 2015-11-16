@@ -18,7 +18,16 @@ void Gamemanager::Update(){
 		unitselect_->Update();
 		break;
 	case Scenename::GAMEMAIN:
+		ui_.Update();
+		ui_.Move();
+		if (!map_.Isunitmoving(ui_.GetUnitNum(),ui_.GetDir())){
+			
+		}
+		if (ui_.IsAttacked()){
+			if (map_.Isattackhit(ui_.GetUnitNum(), ui_.GetDir())){
 
+			}
+		}
 		break;
 	case Scenename::RESULT:
 
@@ -40,6 +49,8 @@ void Gamemanager::Draw(){
 		{
 			(*itr)->Draw();
 		}
+		map_.Draw();
+		ui_.Draw();
 		break;
 	case Scenename::RESULT:
 		

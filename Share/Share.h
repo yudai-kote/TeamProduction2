@@ -10,6 +10,7 @@
 #define CHIPSIZE_X (128)
 #define CHIPSIZE_Y (64)
 
+
 enum Maptype
 {
 	LOAD,
@@ -106,6 +107,10 @@ struct Unitlist
 {
 	int num;
 	Vec2i pos;
+
+	Unitlist(int num) :
+		num(num)
+	{}
 };
 
 struct Status{
@@ -115,13 +120,11 @@ struct Status{
 	float defense;
 	float magic_defense;
 
-	int num;
-
-	Status(int hp,
-		   float power,
-		   float magic_power,
-		   float defense,
-		   float magic_defense):
+	Status(int hp = 0,
+		   float power = 0,
+		   float magic_power = 0,
+		   float defense = 0,
+		   float magic_defense = 0) :
 		   hp(hp),
 		   power(power),
 		   magic_power(magic_power),

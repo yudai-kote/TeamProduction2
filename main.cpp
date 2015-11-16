@@ -9,6 +9,8 @@ int main() {
 
 	Scenemanager_.Setup();
 
+
+
 	while (env.isOpen()) {
 
 		Gamecount::GameCount(0); // ここで増やす処理を書く

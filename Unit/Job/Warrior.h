@@ -8,26 +8,23 @@ private:
 
 public:
 
-	Warrior(){
-		status = new Status(100, 10, 0, 10, 0);
+	Warrior(int number = 0){
+		status = new Status(100, 50, 0, 10, 0);
+		unitlist = new Unitlist(number);
+		color = Color::red;
 	}
 
-	//Status WarriorStatus(Status warrior){
-	//	warrior.hp = 100;
-	//	warrior.power = 10;
-	//	warrior.magic_power = 0;
-	//	warrior.defense = 10;
-	//	warrior.magic_defense = 0;
+	Status GetWarriorStatus(){
+		return Status{
+			status->hp,
+			status->power,
+			status->magic_power,
+			status->defense,
+			status->magic_defense,
+		};
+	}
 
-	//	return Status{
-	//		warrior.hp,
-	//		warrior.power,
-	//		warrior.magic_power,
-	//		warrior.defense,
-	//		warrior.magic_defense,
-	//	};
-	//}
-
-
-
+	Color GetColor(){
+		return color;
+	}
 };
