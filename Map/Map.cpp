@@ -397,7 +397,7 @@ int Map::Ismagichit(int unit_num, Vec2i cursol_pos)
 {
 	int cost;
 
-	if (unit_num < player_list.size())
+	if (unit_num < static_cast<int>(player_list.size()))
 	{
 		for (auto player : player_list)
 		{
@@ -433,10 +433,10 @@ int Map::Ismagichit(int unit_num, Vec2i cursol_pos)
 			return false;
 		}
 
-		return;
+		return false;
 	}
 
-	if (unit_num < enemy_list.size())
+	if (unit_num < static_cast<int>(enemy_list.size()))
 	{
 		for (auto enemy : enemy_list)
 		{
@@ -472,6 +472,8 @@ int Map::Ismagichit(int unit_num, Vec2i cursol_pos)
 			return false;
 		}
 	}
+
+	return false;
 }
 
 void Map::Setup(int stage, Vec2i map_num)
@@ -551,7 +553,7 @@ void Map::DrawMagicrange(int unit_num)
 {
 	int cost;
 
-	if (unit_num < player_list.size())
+	if (unit_num < static_cast<int>(player_list.size()))
 	{
 		for (auto player : player_list)
 		{
@@ -561,7 +563,7 @@ void Map::DrawMagicrange(int unit_num)
 				{
 					cost = (player.pos.x() - x) + (player.pos.y() - y);
 
-					if (cost > hit_range || chip_block[y][x].Getmaptype == Maptype::NONE)
+					if (cost > hit_range || chip_block[y][x].Getmaptype() == Maptype::NONE)
 						continue;
 
 					drawBox(x * CHIPSIZE_X, -y * CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, 5, Color::red);
@@ -572,7 +574,7 @@ void Map::DrawMagicrange(int unit_num)
 		return;
 	}
 
-	if (unit_num < enemy_list.size())
+	if (unit_num < static_cast<int>(enemy_list.size()))
 	{
 		for (auto enemy : enemy_list)
 		{
@@ -582,7 +584,7 @@ void Map::DrawMagicrange(int unit_num)
 				{
 					cost = (enemy.pos.x() - x) + (enemy.pos.y() - y);
 
-					if (cost > hit_range || chip_block[y][x].Getmaptype == Maptype::NONE)
+					if (cost > hit_range || chip_block[y][x].Getmaptype() == Maptype::NONE)
 						continue;
 
 					drawBox(x * CHIPSIZE_X, -y * CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, 5, Color::red);
