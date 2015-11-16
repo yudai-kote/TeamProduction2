@@ -6,8 +6,6 @@ struct UI{
 };
 class Ui{
 private:
-	
-
 	UI command_board;
 	UI command;
 	UI status_board;
@@ -22,9 +20,7 @@ private:
 	//Getî•ñ
 	Direction direction;
 	int number;
-	
-	
-
+	bool attack;
 public:
 	Ui();
 	void Update();
