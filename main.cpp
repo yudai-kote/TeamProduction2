@@ -13,8 +13,8 @@ int main() {
 
 		Gamecount::GameCount(0); // ここで増やす処理を書く
 
-		Scenemanager_.Shift();
 		Scenemanager_.Update();
+		Scenemanager_.Shift();
 		env.begin();
 
 		Scenemanager_.Draw();
