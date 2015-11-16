@@ -3,6 +3,7 @@
 #include "Unitselect/Unitselect.h"
 #include "../../Classbase.h"
 #include "../../Map/Map.h"
+#include "../../UI/UI.h"
 //#include "../../Unit/Unitplayer.h"
 //#include "../../Unit/Unitenemy.h"
 
@@ -19,6 +20,8 @@ private:
 	Unitselect* unitselect_ = new Unitselect(l_player);
 
 	Map map_;
+
+	Ui ui_;
 
 	std::list<Unitplayer*> l_player;
 
