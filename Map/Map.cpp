@@ -7,7 +7,7 @@ void Map::MapDelete()
 
 Map::Map()
 {
-	Setup(1, Vec2i(5, 5));
+	Setup(1, Vec2i(10, 10));
 }
 
 const void Map::Setplayerlist(Unitlist player_list)
@@ -60,7 +60,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[player.pos.y() - 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
+					{
+						player.pos.y()--;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -84,7 +88,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[player.pos.y() + 1][player.pos.x()].Getmaptype() == Maptype::LOAD)
+					{
+						player.pos.y()++;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -106,9 +114,13 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 							player.pos.y() == player_unit.pos.y())
 							return false;
 					}
-					
+
 					if (chip_block[player.pos.y()][player.pos.x() - 1].Getmaptype() == Maptype::LOAD)
+					{
+						player.pos.x()--;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -132,7 +144,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[player.pos.y()][player.pos.x() + 1].Getmaptype() == Maptype::LOAD)
+					{
+						player.pos.x()++;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -176,7 +192,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[enemy.pos.y() - 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
+					{
+						enemy.pos.y()--;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -200,7 +220,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[enemy.pos.y() + 1][enemy.pos.x()].Getmaptype() == Maptype::LOAD)
+					{
+						enemy.pos.y()++;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -224,7 +248,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[enemy.pos.y()][enemy.pos.x() - 1].Getmaptype() == Maptype::LOAD)
+					{
+						enemy.pos.x()--;
+
 						return true;
+					}
 					else
 						return false;
 					break;
@@ -248,7 +276,11 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 					}
 
 					if (chip_block[enemy.pos.y()][enemy.pos.x() + 1].Getmaptype() == Maptype::LOAD)
+					{
+						enemy.pos.x()++;
+
 						return true;
+					}
 					else
 						return false;
 					break;
