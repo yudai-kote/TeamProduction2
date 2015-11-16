@@ -58,3 +58,9 @@ Status Chara::GetStatus(){
 		status->magic_defense,
 	};
 }
+
+Unitlist Chara::GetNum(){
+	return Unitlist{
+		unitlist->num,
+	};
+}
