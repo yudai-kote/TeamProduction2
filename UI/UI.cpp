@@ -17,7 +17,7 @@ Ui::Ui(){
 
 void Ui::Update(){
 	
-	Move();
+	
 	Animation();
 }
 
@@ -72,8 +72,11 @@ void Ui::Select(){
 		{
 		case 0:
 			action = true;
+			OperatePlayer();
 			break;
-
+		case 1:
+			action = true;
+			
 
 		}
 	}
@@ -90,7 +93,15 @@ void Ui::Move(){
 
 }
 
-
+void Ui::AttakPlayer(int end){
+	if (end == true){
+		action = false;
+		attack = false;
+	}
+	else {
+		attack = true;
+	}
+}
 
 void Ui::Animation(){
 	animation = std::sin(angle) * 25;
@@ -107,3 +118,16 @@ Direction Ui::GetDir(){
 int Ui::GetUnitNum(){
 	return number;
 }
+
+bool Ui::IsAttacked(){
+	return attack;
+}
+
+void Ui::SetDir(Direction set){
+	direction = set;
+}
+
+void Ui::SetUnitNum(int set){
+	number = set;
+}
+
