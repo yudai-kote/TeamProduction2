@@ -465,3 +465,8 @@ void Map::Drawcursolpos(Vec2i pos)
 		}
 	}
 }
+
+void Map::DrawMagicrange()
+{
+	
+}

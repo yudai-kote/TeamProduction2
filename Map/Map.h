@@ -27,6 +27,7 @@ public:
 	//(行動するユニットの番号, 行動する向き)
 	bool Isunitmoving(int, Direction);
 	bool Isattackhit(int, Direction);
+	
 
 	//（マップのナンバー, マップの数）
 	void Setup(int, Vec2i);
@@ -35,5 +36,7 @@ public:
 	//カーソルのマップチップでの座標を渡せば
 	//今指している場所を光らせる
 	void Drawcursolpos(Vec2i);
+	//魔法の攻撃の範囲
+	void DrawMagicrange();
 
 };
