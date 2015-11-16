@@ -1,7 +1,7 @@
 #include "Unitplayer.h"
 
 Unitplayer::Unitplayer(){
-	pos = Vec2f(-500,0);
+	pos = Vec2f(500,-HEIGHT/3);
 	size = Vec2f(100, 200);
 	direction = Direction::NORTH;
 	can_move = false;
@@ -31,10 +31,17 @@ void Unitplayer::Update(){
 
 void Unitplayer::Draw(){
 
+
+
 	drawFillBox(pos.x(), pos.y(),
 				size.x(), size.y(),
-				Color::white);
-	//std::cout << pos << std::endl;
+				color);
+
+	num = unitlist->num;
+	font.size(50);
+	font.draw("No." + std::to_string(num), Vec2f(pos.x(), pos.y() - 100), Color::white);
+	//font.draw("No." + std::to_string(status->hp), Vec2f(pos.x(), pos.y() - 200), Color::white);
+
 }
 
 //****************************************************************
@@ -55,7 +62,25 @@ void Unitplayer::SetDirection(Direction ui_direction){
 }
 
 void Unitplayer::SetSelectPos(Vec2f select_pos){
-	pos += select_pos;
+	pos -= select_pos;
+}
+
+void Unitplayer::SetSelectNum(int selectnumber){
+	unitlist->num += selectnumber;
+}
+
+Status Unitplayer::GetStatus(){
+	return Status{
+		status->hp,
+		status->power,
+		status->magic_power,
+		status->defense,
+		status->magic_defense,
+	};
+}
+
+int Unitplayer::GetNum(){
+	return unitlist->num;
 }
 
 // Œü‚«‚É‚æ‚Á‚ÄˆÚ“®‚·‚éˆ—

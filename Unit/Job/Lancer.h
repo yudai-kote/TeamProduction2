@@ -6,28 +6,26 @@ class Lancer : public Unitplayer{
 private:
 
 
-
 public:
+	
 
-	Lancer(){
-		status = new Status(70,20,0,10,0);
+	Lancer(int number = 0){
+		status = new Status(70,70,0,10,0);
+		unitlist = new Unitlist(number);
+		color = Color::blue;
 	};
 
-	//Status LancerStatus(Status lancer){
-	//	lancer.hp = 70;
-	//	lancer.power = 20;
-	//	lancer.magic_power = 0;
-	//	lancer.defense = 10;
-	//	lancer.magic_defense = 0;
+	Status GetLancerStatus(){
+		return Status{
+			status->hp,
+			status->power,
+			status->magic_power,
+			status->defense,
+			status->magic_defense,
+		};
+	}
 
-	//	return Status{
-	//		lancer.hp,
-	//		lancer.power,
-	//		lancer.magic_power,
-	//		lancer.defense,
-	//		lancer.magic_defense,
-	//	};
-	//}
-
-
+	Color GetColor(){
+		return color;
+	}
 };

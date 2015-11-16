@@ -8,18 +8,27 @@
 class Unitselect : public Classbase{
 
 private:
-	
+	Font font = Font("res/meiryo.ttc");
+	int font_size = 50;
+
 	std::list<Unitplayer*>& p_list_;
 
-	int select_job;
-
+	
 	std::list<Vec2f> pos;
 
+	Lancer lancer;
+	Warrior warrior;
+
+	int select_job;
+	int num;
+	int count = 1;
+	Color selectjob_color[static_cast<int>(Job::JOB_MAX)];
 
 	void SelectJob();
 	void ShiftJob();
 
-
+	void JobDraw();
+	void StatusDraw();
 public:
 
 	Unitselect(std::list<Unitplayer*>& p_list);
