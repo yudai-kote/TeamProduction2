@@ -521,7 +521,7 @@ void Map::Draw()
 			switch (chip_block[y][x].Getmaptype())
 			{
 			case Maptype::LOAD:
-				drawFillBox(x*CHIPSIZE_X, -y* CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, Color::green);
+				drawFillBox(x*CHIPSIZE_X, y* CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, Color::green);
 				break;
 
 			case Maptype::NONE:
