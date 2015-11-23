@@ -11,7 +11,7 @@ public:
 
 	Lancer(int number = 0){
 		status = new Status(70,70,0,10,0);
-		unitlist = new Unitlist(number);
+		unitlist = new Unitlist(number,Vec2i((int)pos.x(),(int)pos.y()));
 		color = Color::blue;
 	};
 

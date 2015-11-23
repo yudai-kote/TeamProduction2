@@ -10,7 +10,7 @@ public:
 
 	Warrior(int number = 0){
 		status = new Status(100, 50, 0, 10, 0);
-		unitlist = new Unitlist(number);
+		unitlist = new Unitlist(number, Vec2i((int)pos.x(), (int)pos.y()));
 		color = Color::red;
 	}
 

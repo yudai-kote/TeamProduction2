@@ -14,6 +14,7 @@ private:
 
 public:
 
+
 	Unitplayer();
 
 	void Setup(Status status);
@@ -27,9 +28,11 @@ public:
 	void SetIsAttack(bool is_attack_);
 	void SetDirection(Direction ui_direction);
 
-
+	Unitlist GetUnitlist();
 	Status GetStatus();
 	int GetNum();
+	Job GetJob();
+	Vec2f GetSelectPos();
 
 };
 

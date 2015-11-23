@@ -62,5 +62,6 @@ Status Chara::GetStatus(){
 Unitlist Chara::GetNum(){
 	return Unitlist{
 		unitlist->num,
+		unitlist->pos,
 	};
 }
