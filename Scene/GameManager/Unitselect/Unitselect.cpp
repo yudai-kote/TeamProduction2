@@ -58,6 +58,7 @@ void Unitselect::SelectJob(){
 			if (env.isPushKey(GLFW_KEY_ENTER))
 			{
 				pop_animation = true;
+				animation_time = 0;
 				p_list_.push_back(new Warrior(count));
 				count++;
 				for (auto itr = p_list_.begin(); itr != --p_list_.end(); ++itr)
@@ -72,6 +73,7 @@ void Unitselect::SelectJob(){
 			if (env.isPushKey(GLFW_KEY_ENTER))
 			{
 				pop_animation = true;
+				animation_time = 0;
 				p_list_.push_back(new Lancer(count));
 				count++;
 				for (auto itr = p_list_.begin(); itr != --p_list_.end(); ++itr)
