@@ -52,6 +52,7 @@ enum class Direction
 	SOUTH,		//ìÏ
 	EAST,		//ìå
 	WEST,		//êº
+	NONE		//ê√é~
 };
 
 

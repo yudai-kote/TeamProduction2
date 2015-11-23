@@ -6,6 +6,8 @@ struct UI{
 };
 class Ui{
 private:
+	Font font = Font("res/meiryo.ttc");
+	int font_size = 50;
 	UI command_board;
 	UI command;
 	UI status_board;
@@ -24,7 +26,7 @@ private:
 public:
 	Ui();
 	void Update();
-	void Draw();
+	void Draw(Status status);
 	void BoardDraw();
 	void OperatePlayer();
 	void AttakPlayer(int end);
