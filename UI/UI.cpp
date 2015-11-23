@@ -1,6 +1,7 @@
 #include "UI.h"
 
 Ui::Ui(){
+	font.size(font_size);
 	animation = 0;
 	angle = 0;
 	instruction = 0;
@@ -16,21 +17,36 @@ Ui::Ui(){
 }
 
 void Ui::Update(){
-	
-	
+
+
 	Animation();
 }
 
-void Ui::Draw(){
+void Ui::Draw(Status status){
 	drawFillBox(command_board.pos.x(), command_board.pos.y(),
 		command_board.size.x(), command_board.size.y(),
 		Color::red);
 	drawFillBox(status_board.pos.x(), status_board.pos.y(),
 		status_board.size.x(), status_board.size.y(),
 		Color::blue);
-	drawFillBox(command.pos.x() + animation , command.pos.y(),
+	drawFillBox(command.pos.x() + animation, command.pos.y(),
 		command.size.x(), command.size.y(),
 		Color::white);
+	font.draw("体力　　　　" + std::to_string(status.hp),
+		Vec2f(-WIDTH / 3, 200 - font_size), Color::white);
+
+	font.draw("攻撃力　　　" + std::to_string(status.power),
+		Vec2f(-WIDTH / 3, 200 - font_size * 2), Color::white);
+
+	font.draw("魔法攻撃力　" + std::to_string(status.magic_power),
+		Vec2f(-WIDTH / 3, 200 - font_size * 3), Color::white);
+
+	font.draw("防御力　　　" + std::to_string(status.defense),
+		Vec2f(-WIDTH / 3, 200 - font_size * 4), Color::white);
+
+	font.draw("魔法防御力　" + std::to_string(status.magic_defense),
+		Vec2f(-WIDTH / 3, 200 - font_size * 5), Color::white);
+
 }
 
 void Ui::OperatePlayer(){
@@ -48,6 +64,7 @@ void Ui::OperatePlayer(){
 	}
 	if (env.isPushKey(GLFW_KEY_BACKSPACE)){
 		action = false;
+		direction = Direction::NONE;
 	}
 }
 
@@ -64,6 +81,14 @@ void Ui::OperateCursor(){
 			command.pos.y() -= 150;
 		}
 	}
+	if (number > 1){
+		if (env.isPushKey('A')){
+			number--;
+		}
+	}
+	if (env.isPushKey('D')){
+		number++;
+	}
 }
 
 void Ui::Select(){
@@ -76,7 +101,7 @@ void Ui::Select(){
 			break;
 		case 1:
 			action = true;
-			
+
 
 		}
 	}

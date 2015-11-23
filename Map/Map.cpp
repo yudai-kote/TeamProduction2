@@ -393,6 +393,89 @@ bool Map::Isattackhit(int unit_num, Direction direction)
 	return false;
 }
 
+int Map::Ismagichit(int unit_num, Vec2i cursol_pos)
+{
+	int cost;
+
+	if (unit_num < static_cast<int>(player_list.size()))
+	{
+		for (auto player : player_list)
+		{
+			if (player.pos != cursol_pos)
+				continue;
+
+			for (int y = 0; y < static_cast<int>(chip_block.size()); y++)
+			{
+				for (int x = 0; x < static_cast<int>(chip_block[y].size()); x++)
+				{
+					cost = (player.pos.x() - cursol_pos.x()) + (player.pos.y() - cursol_pos.y());
+
+					if (cost > hit_range)
+						return false;
+
+					for (auto p_unit : player_list)
+					{
+						if (p_unit.pos == player.pos)
+							continue;
+
+						if (p_unit.pos == cursol_pos)
+							return p_unit.num;
+					}
+
+					for (auto e_unit : enemy_list)
+					{
+						if (e_unit.pos == cursol_pos)
+							return e_unit.num;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		return false;
+	}
+
+	if (unit_num < static_cast<int>(enemy_list.size()))
+	{
+		for (auto enemy : enemy_list)
+		{
+			if (enemy.pos != cursol_pos)
+				continue;
+
+			for (int y = 0; y < static_cast<int>(chip_block.size()); y++)
+			{
+				for (int x = 0; x < static_cast<int>(chip_block[y].size()); x++)
+				{
+					cost = (enemy.pos.x() - cursol_pos.x()) + (enemy.pos.y() - cursol_pos.y());
+
+					if (cost > hit_range)
+						return false;
+
+					for (auto p_unit : player_list)
+					{
+						if (p_unit.pos == cursol_pos)
+							return p_unit.num;
+					}
+
+					for (auto e_unit : enemy_list)
+					{
+						if (e_unit.pos == cursol_pos)
+							continue;
+
+						if (e_unit.pos == cursol_pos)
+							return e_unit.num;
+					}
+				}
+			}
+
+			return false;
+		}
+	}
+
+	return false;
+}
+
 void Map::Setup(int stage, Vec2i map_num)
 {
 	chip_block = std::vector<std::vector<Block>>(map_num.y(), std::vector<Block>(map_num.x()));
@@ -466,7 +549,49 @@ void Map::Drawcursolpos(Vec2i pos)
 	}
 }
 
-void Map::DrawMagicrange()
+void Map::DrawMagicrange(int unit_num)
 {
-	
+	int cost;
+
+	if (unit_num < static_cast<int>(player_list.size()))
+	{
+		for (auto player : player_list)
+		{
+			for (int y = 0; y < static_cast<int>(chip_block.size()); y++)
+			{
+				for (int x = 0; x < static_cast<int>(chip_block[y].size()); x++)
+				{
+					cost = (player.pos.x() - x) + (player.pos.y() - y);
+
+					if (cost > hit_range || chip_block[y][x].Getmaptype() == Maptype::NONE)
+						continue;
+
+					drawBox(x * CHIPSIZE_X, -y * CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, 5, Color::red);
+				}
+			}
+		}
+
+		return;
+	}
+
+	if (unit_num < static_cast<int>(enemy_list.size()))
+	{
+		for (auto enemy : enemy_list)
+		{
+			for (int y = 0; y < static_cast<int>(chip_block.size()); y++)
+			{
+				for (int x = 0; x < static_cast<int>(chip_block[y].size()); x++)
+				{
+					cost = (enemy.pos.x() - x) + (enemy.pos.y() - y);
+
+					if (cost > hit_range || chip_block[y][x].Getmaptype() == Maptype::NONE)
+						continue;
+
+					drawBox(x * CHIPSIZE_X, -y * CHIPSIZE_Y, CHIPSIZE_X - 1, CHIPSIZE_Y - 1, 5, Color::red);
+				}
+			}
+		}
+
+		return;
+	}
 }

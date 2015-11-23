@@ -2,12 +2,13 @@
 
 Gamemanager::Gamemanager(){
 	gamechange = Scenename::UNITSELECT;
+	Setup();
 }
 
 
 void Gamemanager::Setup(){
-	gamechange = Scenename::UNITSELECT;
-
+	
+	ui_.SetUnitNum(1);
 	
 }
 
@@ -20,11 +21,19 @@ void Gamemanager::Update(){
 	case Scenename::GAMEMAIN:
 		ui_.Update();
 		ui_.Move();
-		if (!map_.Isunitmoving(ui_.GetUnitNum(),ui_.GetDir())){
-			
-		}
-		if (ui_.IsAttacked()){
-			if (map_.Isattackhit(ui_.GetUnitNum(), ui_.GetDir())){
+		for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
+		{
+			if ((*itr)->GetNum() == ui_.GetUnitNum()){
+				std::cout << (*itr)->GetNum() << std::endl;
+				(*itr)->SetCanMove(!map_.Isunitmoving(ui_.GetUnitNum(), ui_.GetDir()));
+				(*itr)->SetDirection(ui_.GetDir());
+
+
+				if (ui_.IsAttacked()){
+					if (map_.Isattackhit(ui_.GetUnitNum(), ui_.GetDir())){
+						//プレイヤーの攻撃力を見て、エネミーのHPを減らす
+					}
+				}
 
 			}
 		}
@@ -44,13 +53,15 @@ void Gamemanager::Draw(){
 		unitselect_->Draw();
 		break;
 	case Scenename::GAMEMAIN:
-
+		map_.Draw();
 		for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
 		{
+			//std::cout << ui_.GetUnitNum() << std::endl;
+			if ((*itr)->GetNum() == ui_.GetUnitNum()){
+				ui_.Draw((*itr)->GetStatus());
+			}
 			(*itr)->Draw();
 		}
-		map_.Draw();
-		ui_.Draw();
 		break;
 	case Scenename::RESULT:
 		
