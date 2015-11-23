@@ -2,9 +2,7 @@
 
 Astar::Astar(){
 
-	map = std::vector<std::vector<MapChip>>(static_cast<int>(Block_size::LENGTH), std::vector<MapChip>(static_cast<int>(Block_size::WIDE)));
 }
-
 
 
 void Astar::setup(Vec2f enemy_pos, Vec2f player_pos){
@@ -68,40 +66,40 @@ void Astar::algorithm(){
 
 		switch (direction)
 		{
-		case static_cast<int>(Direction::UP) :
+		case static_cast<int>(Direction::NORTH) :
 			search_pos.y() -= 1;
 			break;
-		case static_cast<int>(Direction::DOWN) :
+		case static_cast<int>(Direction::SOUTH) :
 			search_pos.y() += 1;
 			break;
-		case static_cast<int>(Direction::LEFT) :
+		case static_cast<int>(Direction::WEST) :
 			search_pos.x() -= 1;
 			break;
-		case static_cast<int>(Direction::RIGHT) :
+		case static_cast<int>(Direction::EAST) :
 			search_pos.x() += 1;
 			break;
 		}
 
 		if (search_pos.x() >= 0 && search_pos.y() >= 0)
 		{
-			if (search_pos.x() < static_cast<int>(Block_size::WIDE) && search_pos.y() < static_cast<int>(Block_size::LENGTH))
+			if (search_pos.x() < static_cast<int>(WIDE) && search_pos.y() < static_cast<int>(LENGTH))
 			{
 				if (map[search_pos.y()][search_pos.x()].search == NONE)
 				{
 					if (map[search_pos.y()][search_pos.x()].status != BLOCK){
 						switch (direction)
 						{
-						case static_cast<int>(Direction::UP) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::DOWN);
+						case static_cast<int>(Direction::NORTH) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::SOUTH);
 							break;
-						case static_cast<int>(Direction::DOWN) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::UP);
+						case static_cast<int>(Direction::SOUTH) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::NORTH);
 							break;
-						case static_cast<int>(Direction::LEFT) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::RIGHT);
+						case static_cast<int>(Direction::WEST) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::EAST);
 							break;
-						case static_cast<int>(Direction::RIGHT) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::LEFT);
+						case static_cast<int>(Direction::EAST) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::WEST);
 							break;
 						}
 						map[search_pos.y()][search_pos.x()].search = OPEN;
@@ -125,22 +123,22 @@ int Astar::parentUpdate(Vec2i _enemy_pos){
 
 	switch (map[_enemy_pos.y()][_enemy_pos.x()].parent)
 	{
-	case static_cast<int>(Direction::UP) :
+	case static_cast<int>(Direction::NORTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å™", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() - 1));
 		break;
-	case static_cast<int>(Direction::DOWN) :
+	case static_cast<int>(Direction::SOUTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å´", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() + 1));
 		break;
-	case static_cast<int>(Direction::LEFT) :
+	case static_cast<int>(Direction::WEST) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å©", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x() - 1, _enemy_pos.y()));
 		break;
-	case static_cast<int>(Direction::RIGHT) :
+	case static_cast<int>(Direction::EAST) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å®", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x() + 1, _enemy_pos.y()));
@@ -183,16 +181,16 @@ int Astar::getParentPlayer(){
 
 	switch (map[_enemy_pos.y()][_enemy_pos.x()].parent)
 	{
-	case static_cast<int>(Direction::UP) :
+	case static_cast<int>(Direction::NORTH) :
 		return map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		break;
-	case static_cast<int>(Direction::DOWN) :
+	case static_cast<int>(Direction::SOUTH) :
 		return map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		break;
-	case static_cast<int>(Direction::LEFT) :
+	case static_cast<int>(Direction::WEST) :
 		return map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		break;
-	case static_cast<int>(Direction::RIGHT) :
+	case static_cast<int>(Direction::EAST) :
 		return map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		break;
 	}
@@ -210,9 +208,11 @@ void Astar::setPlayerPos(Vec2f player_pos){
 }
 
 void Astar::setMap(std::vector<std::vector<int>>setmap){
+	map = std::vector<std::vector<MapChip>>(static_cast<int>(WIDE), std::vector<MapChip>(static_cast<int>(LENGTH)));
+
 	for (unsigned y = 0; y < map.size(); y++)
 	{
-		for (unsigned x = 0; x < setmap[y].size(); x++)
+		for (unsigned x = 0; x < map[y].size(); x++)
 		{
 			map[y][x].status = setmap[y][x];
 		}
@@ -282,40 +282,40 @@ void Astar::algorithm2(){
 
 		switch (direction)
 		{
-		case static_cast<int>(Direction::UP) :
+		case static_cast<int>(Direction::NORTH) :
 			search_pos.y() -= 1;
 			break;
-		case static_cast<int>(Direction::DOWN) :
+		case static_cast<int>(Direction::SOUTH) :
 			search_pos.y() += 1;
 			break;
-		case static_cast<int>(Direction::LEFT) :
+		case static_cast<int>(Direction::WEST) :
 			search_pos.x() -= 1;
 			break;
-		case static_cast<int>(Direction::RIGHT) :
+		case static_cast<int>(Direction::EAST) :
 			search_pos.x() += 1;
 			break;
 		}
 
 		if (search_pos.x() >= 0 && search_pos.y() >= 0)
 		{
-			if (search_pos.x() < static_cast<int>(Block_size::WIDE) && search_pos.y() < static_cast<int>(Block_size::LENGTH))
+			if (search_pos.x() < static_cast<int>(WIDE) && search_pos.y() < static_cast<int>(LENGTH))
 			{
 				if (map[search_pos.y()][search_pos.x()].search == NONE)
 				{
 					if (map[search_pos.y()][search_pos.x()].status != BLOCK){
 						switch (direction)
 						{
-						case static_cast<int>(Direction::UP) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::DOWN);
+						case static_cast<int>(Direction::NORTH) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::SOUTH);
 							break;
-						case static_cast<int>(Direction::DOWN) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::UP);
+						case static_cast<int>(Direction::SOUTH) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::NORTH);
 							break;
-						case static_cast<int>(Direction::LEFT) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::RIGHT);
+						case static_cast<int>(Direction::WEST) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::EAST);
 							break;
-						case static_cast<int>(Direction::RIGHT) :
-							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::LEFT);
+						case static_cast<int>(Direction::EAST) :
+							map[search_pos.y()][search_pos.x()].parent = static_cast<int>(Direction::WEST);
 							break;
 						}
 						map[search_pos.y()][search_pos.x()].search = OPEN;

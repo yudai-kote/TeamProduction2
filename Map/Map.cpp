@@ -476,6 +476,21 @@ int Map::Ismagichit(int unit_num, Vec2i cursol_pos)
 	return false;
 }
 
+std::vector<std::vector<int>> Map::GetChipType(){
+	std::vector<std::vector<int>> chip_type;
+
+	for (int y = 0; y < chip_block.size(); y++)
+	{
+		for (int x = 0; x < chip_block[y].size(); x++)
+		{
+			chip_type[y][x] = chip_block[y][x].Getmaptype();
+		}
+	}
+
+	return chip_type;
+}
+
+
 void Map::Setup(int stage, Vec2i map_num)
 {
 	chip_block = std::vector<std::vector<Block>>(map_num.y(), std::vector<Block>(map_num.x()));
