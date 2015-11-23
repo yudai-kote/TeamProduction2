@@ -23,11 +23,12 @@ protected:
 
 	Vec2f pos;
 	Vec2f size;
+	Vec2f offset_pos = Vec2f::Zero();
 	Vec2f offset_size = Vec2f::Zero();
 	Direction direction;
 	bool can_move;
 	bool is_attack;
-	int num;
+	//int num;
 
 	Animationtype chara_type;
 
@@ -45,9 +46,6 @@ protected:
 
 public:
 	Chara();
-
-
-
 
 	void Setup();
 	void Update();

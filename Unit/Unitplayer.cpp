@@ -31,13 +31,11 @@ void Unitplayer::Update(){
 
 void Unitplayer::Draw(){
 
-
-
 	drawFillBox(pos.x(), pos.y(),
 				size.x(), size.y(),
 				color);
 
-	num = unitlist->num;
+	int num = unitlist->num;
 	font.size(50);
 	font.draw("No." + std::to_string(num), Vec2f(pos.x(), pos.y() - 100), Color::white);
 	//font.draw("No." + std::to_string(status->hp), Vec2f(pos.x(), pos.y() - 200), Color::white);
@@ -69,6 +67,9 @@ void Unitplayer::SetSelectNum(int selectnumber){
 	unitlist->num += selectnumber;
 }
 
+//****************************************************************
+// ゲッター
+//****************************************************************
 Status Unitplayer::GetStatus(){
 	return Status{
 		status->hp,
@@ -79,9 +80,26 @@ Status Unitplayer::GetStatus(){
 	};
 }
 
+Unitlist Unitplayer::GetUnitlist(){
+	unitlist->pos = Vec2i((int)pos.x(), (int)pos.y());
+
+	return Unitlist{
+		unitlist->num,
+		unitlist->pos,
+	};
+}
+
 int Unitplayer::GetNum(){
 	return unitlist->num;
 }
+
+Vec2f Unitplayer::GetSelectPos(){
+	return Vec2f(500, -HEIGHT / 3);
+}
+
+//Job Unitplayer::GetJob(){
+//	return job;
+//}
 
 // 向きによって移動する処理
 void Unitplayer::Move(Direction ui_direction){
@@ -159,23 +177,6 @@ void Unitplayer::Move(Direction ui_direction){
 		break;
 	}
 
-	//if (env.isPushKey(GLFW_KEY_UP))
-	//{
-	//	direction = Direction::NORTH;
-	//}
-	//if (env.isPushKey(GLFW_KEY_DOWN))
-	//{
-	//	direction = Direction::SOUTH;
-	//}
-	//if (env.isPushKey(GLFW_KEY_RIGHT))
-	//{
-	//	direction = Direction::EAST;
-	//}
-	//if (env.isPushKey(GLFW_KEY_LEFT))
-	//{
-	//	direction = Direction::WEST;
-	//}
-
 }
 
 void Unitplayer::Animation(){
@@ -196,25 +197,3 @@ void Unitplayer::Animation(){
 }
 
 
-//アニメーション
-// Vec2f pos, Vec2f size				ポス, サイズ
-// Vec2f offset_size, Texture tx,		画像切り取り幅, 画像
-// int count							使う枚数
-// int frame							何フレームか
-// int num								何番目からか
-//
-static void CharacterAnimation(Vec2f pos,Vec2f size,Vec2f offset_size,Texture tx,
-					  int count,int frame,int num){
-	int animation_time1;
-	int animation_time2;
-	Vec2f offset_pos;
-	animation_time1 = (animation_time2++ / frame) % count + num;
-
-	offset_pos.x() = (animation_time1 % 4) * offset_size.x();
-	offset_pos.y() = (animation_time1 / 4) * offset_size.y();
-
-	drawTextureBox(pos.x(), pos.y(), size.x(), size.y(),
-				   offset_pos.x(), offset_pos.y(), offset_size.x(), offset_size.y(),
-				   tx, Color::white);
-
-}
