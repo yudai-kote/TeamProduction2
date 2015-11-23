@@ -49,4 +49,7 @@ public:
 	//–‚–@UŒ‚‚Ì”ÍˆÍ‚Ì•`Ê
 	void DrawMagicrange(int);
 
+
+	//Astar‚É“n‚·0‚©1‚Ì”»’è
+	std::vector<std::vector<int>> GetChipType();
 };

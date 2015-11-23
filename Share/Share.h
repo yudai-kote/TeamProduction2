@@ -10,6 +10,10 @@
 #define CHIPSIZE_X (128)
 #define CHIPSIZE_Y (64)
 
+enum Mapsize{
+	WIDE = 10,
+	LENGTH = 10,
+};
 
 enum Maptype
 {
