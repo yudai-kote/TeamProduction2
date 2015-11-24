@@ -21,13 +21,15 @@ protected:
 		ATTACK,
 	};
 
-	Vec2f pos;
-	Vec2f size;
+	Vec2f pos = Vec2f::Zero();
+	Vec2f size = Vec2f(50.0f, 100.0f);
 	Vec2f offset_pos = Vec2f::Zero();
 	Vec2f offset_size = Vec2f::Zero();
 	Direction direction;
 	bool can_move;
 	bool is_attack;
+	Vec2f move_limit = Vec2f(CHIPSIZE_X, CHIPSIZE_Y);
+	
 	//int num;
 
 	Animationtype chara_type;
