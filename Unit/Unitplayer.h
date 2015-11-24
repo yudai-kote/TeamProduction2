@@ -27,8 +27,11 @@ public:
 	void SetCanMove(bool can_move_);
 	void SetIsAttack(bool is_attack_);
 	void SetDirection(Direction ui_direction);
+	void SetUnitlistPos(Vec2i getpos);
+	void SetDrawPos(Vec2i getpos);
 
 	Unitlist GetUnitlist();
+	Vec2i GetPos();
 	Status GetStatus();
 	int GetNum();
 	Job GetJob();
