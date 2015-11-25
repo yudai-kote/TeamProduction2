@@ -53,8 +53,6 @@ public:
 	void Update();
 	void Draw();
 
-	Status GetStatus();
-	Unitlist GetNum();
 
 };
 
