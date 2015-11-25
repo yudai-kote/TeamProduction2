@@ -1,19 +1,23 @@
 #include "Astar.h"
 
 Astar::Astar(){
+	map = std::vector<std::vector<AstarChip>>(WIDE, std::vector<AstarChip>(LENGTH));
 
+	for (unsigned y = 0; y < map.size(); y++)
+	{
+		for (unsigned x = 0; x < map[y].size(); x++)
+		{
+			map[y][x].status = 0;
+			map[y][x].search = NONE;
+			map[y][x].parent = static_cast<int>(Direction::NONE);
+			map[y][x].pos.x() = map[y][x].pos.x() + map[y][x].size.x() * x;
+			map[y][x].pos.y() = map[y][x].pos.y() + map[y][x].size.y() * y;
+		}
+	}
 }
 
 
 void Astar::setup(Vec2f enemy_pos, Vec2f player_pos){
-	for (int y = 0; y < map.size(); y++)
-	{
-		for (int x = 0; x < map[y].size(); x++)
-		{
-			map[y][x].search = NONE;
-			map[y][x].parent = 5;
-		}
-	}
 
 	_enemy_pos = Vec2i((float)enemy_pos.x(), (float)enemy_pos.y());
 	_player_pos = Vec2i((float)player_pos.x(), (float)player_pos.y());
@@ -125,22 +129,22 @@ int Astar::parentUpdate(Vec2i _enemy_pos){
 	{
 	case static_cast<int>(Direction::NORTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
-		//font.draw("Å™", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
+		font.draw("Å™", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() - 1));
 		break;
 	case static_cast<int>(Direction::SOUTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
-		//font.draw("Å´", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
+		font.draw("Å´", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() + 1));
 		break;
 	case static_cast<int>(Direction::WEST) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
-		//font.draw("Å©", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
+		font.draw("Å©", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x() - 1, _enemy_pos.y()));
 		break;
 	case static_cast<int>(Direction::EAST) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
-		//font.draw("Å®", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
+		font.draw("Å®", Vec2f((float)map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), (float)map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
 		parentUpdate(Vec2i(_enemy_pos.x() + 1, _enemy_pos.y()));
 		break;
 	}
@@ -208,7 +212,7 @@ void Astar::setPlayerPos(Vec2f player_pos){
 }
 
 void Astar::setMap(std::vector<std::vector<int>>setmap){
-	map = std::vector<std::vector<MapChip>>(static_cast<int>(WIDE), std::vector<MapChip>(static_cast<int>(LENGTH)));
+	map = std::vector<std::vector<AstarChip>>(static_cast<int>(WIDE), std::vector<AstarChip>(static_cast<int>(LENGTH)));
 
 	for (unsigned y = 0; y < map.size(); y++)
 	{
