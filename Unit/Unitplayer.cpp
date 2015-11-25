@@ -114,7 +114,7 @@ Vec2i Unitplayer::GetPos(){
 
 // Œü‚«‚É‚æ‚Á‚ÄˆÚ“®‚·‚éˆ—
 void Unitplayer::Move(Direction ui_direction){
-	int speed = 1;
+	int speed = 10;
 	switch (direction)
 	{
 	case Direction::NORTH:
@@ -190,7 +190,7 @@ void Unitplayer::Move(Direction ui_direction){
 		}
 		break;
 	}
-	if (move_limit.x() >= 0 || move_limit.y() >= 0){
+	if (move_limit.x() < 0 || move_limit.y() < 0){
 		can_move = false;
 		move_limit = Vec2f(CHIPSIZE_X, CHIPSIZE_Y);
 	}

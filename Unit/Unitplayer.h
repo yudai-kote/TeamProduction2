@@ -11,6 +11,8 @@ private:
 	Font font = Font("res/meiryo.ttc");
 
 
+	//番号から座標を割り出す関数
+	void SetDrawPos(Vec2i getpos);
 
 public:
 
@@ -35,8 +37,6 @@ public:
 	void SetDirection(Direction ui_direction);
 	//マップチップ番号をもらうセッター
 	void SetUnitlistPos(Vec2i getpos);
-	//番号から座標を割り出す関数
-	void SetDrawPos(Vec2i getpos);
 
 	//マップのUnitllistに渡す関数 
 	Unitlist GetUnitlist();
