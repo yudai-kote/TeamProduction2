@@ -114,7 +114,7 @@ Vec2i Unitplayer::GetPos(){
 
 // Œü‚«‚É‚æ‚Á‚ÄˆÚ“®‚·‚éˆ—
 void Unitplayer::Move(Direction ui_direction){
-	int speed = 128;
+	Vec2i speed = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
 	switch (direction)
 	{
 	case Direction::NORTH:
@@ -122,8 +122,8 @@ void Unitplayer::Move(Direction ui_direction){
 		{
 		case Direction::NORTH:
 			unitlist->pos.y() += 1;
-			move_limit.y() -= speed;
-			pos.y() += speed;
+			move_limit.y() -= speed.y();
+			pos.y() += speed.y();
 			break;
 		case Direction::SOUTH:
 			direction = Direction::SOUTH;
@@ -144,8 +144,8 @@ void Unitplayer::Move(Direction ui_direction){
 			break;
 		case Direction::SOUTH:
 			unitlist->pos.y() -= 1;
-			move_limit.y() -= speed;
-			pos.y() -= speed;
+			move_limit.y() -= speed.y();
+			pos.y() -= speed.y();
 			break;
 		case Direction::EAST:
 			direction = Direction::EAST;
@@ -166,8 +166,8 @@ void Unitplayer::Move(Direction ui_direction){
 			break;
 		case Direction::EAST:
 			unitlist->pos.x() += 1;
-			move_limit.x() -= speed;
-			pos.x() += speed;
+			move_limit.x() -= speed.x();
+			pos.x() += speed.x();
 			break;
 		case Direction::WEST:
 			direction = Direction::WEST;
@@ -188,8 +188,8 @@ void Unitplayer::Move(Direction ui_direction){
 			break;
 		case Direction::WEST:
 			unitlist->pos.x() -= 1;
-			move_limit.x() -= speed;
-			pos.x() -= speed;
+			move_limit.x() -= speed.x();
+			pos.x() -= speed.x();
 			break;
 		}
 		break;
