@@ -49,19 +49,3 @@ Status Chara::LancerStatus(Status lancer){
 	};
 }
 
-Status Chara::GetStatus(){
-	return Status{
-		status->hp,
-		status->power,
-		status->magic_power,
-		status->defense,
-		status->magic_defense,
-	};
-}
-
-Unitlist Chara::GetNum(){
-	return Unitlist{
-		unitlist->num,
-		unitlist->pos,
-	};
-}

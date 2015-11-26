@@ -7,13 +7,15 @@ class Astar
 private:
 
 	Font font = Font("res/kokubanB.ttf");
-	class MapChip
+	class AstarChip
 	{
 	public:
 		int status = 0;
 		int search = 0;
 		int cost = 0;
 		int parent = 0;
+		Vec2i pos = Vec2i(0, 0);
+		Vec2i size = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
 	};
 
 	enum Block{
@@ -40,15 +42,10 @@ private:
 
 	Vec2i now_pos = Vec2i::Zero();
 
-	std::vector<std::vector<MapChip>> map;
+	std::vector<std::vector<AstarChip>> map;
 	void algorithm2();
 
 public:
-
-	static Astar& get(){
-		static Astar astar;
-		return astar;
-	}
 
 	Astar();
 

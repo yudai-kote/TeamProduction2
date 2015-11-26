@@ -6,13 +6,15 @@ Ui::Ui(){
 	angle = 0;
 	instruction = 0;
 	action = false;
+	attack = false;
+	skill = false;
 	command_board.pos = Vec2f(-960, -540);
-	command_board.size = Vec2f(400, 1080);
+	command_board.size = Vec2f(300, 1080);
 
-	status_board.pos = Vec2f(-560, -540);
-	status_board.size = Vec2f(1560, 300);
+	status_board.pos = Vec2f(-660, -540);
+	status_board.size = Vec2f(1660, 300);
 
-	command.pos = Vec2f(-920, 440);
+	command.pos = Vec2f(-950, 440);
 	command.size = Vec2f(70, 50);
 }
 
@@ -32,62 +34,80 @@ void Ui::Draw(Status status){
 	drawFillBox(command.pos.x() + animation, command.pos.y(),
 		command.size.x(), command.size.y(),
 		Color::white);
+	font.draw("ActiveNo." + std::to_string(number),
+		Vec2f(-WIDTH / 3, -250 - font_size), Color::white);
 	font.draw("体力　　　　" + std::to_string(status.hp),
-		Vec2f(-WIDTH / 3, 200 - font_size), Color::white);
+		Vec2f(-WIDTH / 3, -350 - font_size), Color::white);
 
 	font.draw("攻撃力　　　" + std::to_string(status.power),
-		Vec2f(-WIDTH / 3, 200 - font_size * 2), Color::white);
+		Vec2f(-WIDTH / 20, -250 - font_size * 2), Color::white);
 
 	font.draw("魔法攻撃力　" + std::to_string(status.magic_power),
-		Vec2f(-WIDTH / 3, 200 - font_size * 3), Color::white);
+		Vec2f(- WIDTH /20, -300 - font_size * 3), Color::white);
 
 	font.draw("防御力　　　" + std::to_string(status.defense),
-		Vec2f(-WIDTH / 3, 200 - font_size * 4), Color::white);
+		Vec2f(350, -150 - font_size * 4), Color::white);
 
 	font.draw("魔法防御力　" + std::to_string(status.magic_defense),
-		Vec2f(-WIDTH / 3, 200 - font_size * 5), Color::white);
+		Vec2f(350 , -200 - font_size * 5), Color::white);
 
+	font.draw("移動" ,Vec2f(-830, 445), Color::white);
+	font.draw("攻撃", Vec2f(-830, 445-150), Color::white);
+	font.draw("スキル", Vec2f(-830, 445-300), Color::white);
+	font.draw("STATUS", Vec2f(-830, 445-450), Color::white);
+	font.draw("行動P" + std::to_string((int)cost), Vec2f(-830, 445 - 600), Color::white);
 }
 
-void Ui::OperatePlayer(){
-	if (env.isPushKey('W')){
-		direction = Direction::NORTH;
+Direction Ui::OperatePlayer(){
+	if (action == true){
+		
+		if (env.isPushKey('W')){
+			cost-=0.5;
+			return Direction::NORTH;
+		}
+		if (env.isPushKey('A')){
+			cost -= 0.5;
+			return Direction::WEST;
+		}
+		if (env.isPushKey('S')){
+			cost -= 0.5;
+			return Direction::SOUTH;
+		}
+		if (env.isPushKey('D')){
+			cost -= 0.5;
+			return Direction::EAST;
+		}
+		if (env.isPushKey(GLFW_KEY_BACKSPACE)){
+			action = false;
+			
+		}
+		
 	}
-	if (env.isPushKey('A')){
-		direction = Direction::WEST;
-	}
-	if (env.isPushKey('S')){
-		direction = Direction::SOUTH;
-	}
-	if (env.isPushKey('D')){
-		direction = Direction::EAST;
-	}
-	if (env.isPushKey(GLFW_KEY_BACKSPACE)){
-		action = false;
-		direction = Direction::NONE;
-	}
+	return Direction::NONE;
 }
 
 void Ui::OperateCursor(){
-	if (instruction > 0){
-		if (env.isPushKey('W')){
-			instruction--;
-			command.pos.y() += 150;
+	if (action == false){
+		if (instruction > 0){
+			if (env.isPushKey('W')){
+				instruction--;
+				command.pos.y() += 150;
+			}
 		}
-	}
-	if (instruction < 5){
-		if (env.isPushKey('S')){
-			instruction++;
-			command.pos.y() -= 150;
+		if (instruction < 5){
+			if (env.isPushKey('S')){
+				instruction++;
+				command.pos.y() -= 150;
+			}
 		}
-	}
-	if (number > 1){
-		if (env.isPushKey('A')){
-			number--;
+		if (number > 1){
+			if (env.isPushKey('A')){
+				number--;
+			}
 		}
-	}
-	if (env.isPushKey('D')){
-		number++;
+		if (env.isPushKey('D')){
+			number++;
+		}
 	}
 }
 
@@ -97,35 +117,42 @@ void Ui::Select(){
 		{
 		case 0:
 			action = true;
-			OperatePlayer();
+			
 			break;
 		case 1:
+			AttakPlayer();
 			action = true;
-
-
+			break;
+		case 2:
+			SkillPlayer();
+			action = true;
+			break;
 		}
 	}
 }
 
 void Ui::Move(){
-	if (action == true){
-		OperatePlayer();
-	}
-	else{
-		OperateCursor();
-	}
-	Select();
+	
+	OperateCursor();
+	
+		Select();
+	
+	
 
 }
 
-void Ui::AttakPlayer(int end){
-	if (end == true){
+void Ui::AttakPlayer(){//int end){
+	//if (end == true){
 		action = false;
 		attack = false;
-	}
-	else {
-		attack = true;
-	}
+	//}
+//	else {
+//		attack = true;
+//	}
+}
+
+void Ui::SkillPlayer(){
+
 }
 
 void Ui::Animation(){
@@ -136,9 +163,8 @@ void Ui::Animation(){
 	}
 }
 
-Direction Ui::GetDir(){
-	return direction;
-}
+
+
 
 int Ui::GetUnitNum(){
 	return number;
@@ -148,11 +174,26 @@ bool Ui::IsAttacked(){
 	return attack;
 }
 
-void Ui::SetDir(Direction set){
-	direction = set;
+bool Ui::IsSkilled(){
+	return skill;
 }
+
+Vec2i Ui::GetUnitPos(){
+	return player_pos;
+}
+
+int Ui::GetPlayerCost(){
+	return (int)cost;
+}
+
 
 void Ui::SetUnitNum(int set){
 	number = set;
 }
 
+void Ui::SetUnitPos(Vec2i pos){
+	player_pos = pos;
+}
+void Ui::SetPlayerCost(int cost){
+	this->cost = cost;
+}

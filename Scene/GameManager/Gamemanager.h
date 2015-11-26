@@ -6,7 +6,7 @@
 #include "../../UI/UI.h"
 //#include "../../Unit/Unitplayer.h"
 //#include "../../Unit/Unitenemy.h"
-
+#include "Astar/Astar.h"
 #include "../../Unit/Job/Lancer.h"
 #include "../../Unit/Job/Warrior.h"
 
@@ -27,6 +27,8 @@ private:
 
 	Scenename gamechange;
 
+	bool turn;
+	int cost;
 public:
 	Gamemanager();
 

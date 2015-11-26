@@ -1,7 +1,7 @@
 #include "Unitplayer.h"
 
 Unitplayer::Unitplayer(){
-	pos = Vec2f(500,-HEIGHT/3);
+	pos = Vec2f(500, -HEIGHT / 3);
 	size = Vec2f(100, 200);
 	direction = Direction::NORTH;
 	can_move = false;
@@ -14,7 +14,7 @@ Unitplayer::Unitplayer(){
 
 void Unitplayer::Setup(Status status){
 
-	
+
 
 
 
@@ -67,6 +67,15 @@ void Unitplayer::SetSelectNum(int selectnumber){
 	unitlist->num += selectnumber;
 }
 
+void Unitplayer::SetUnitlistPos(Vec2i getpos){
+	unitlist->pos = getpos;
+	SetDrawPos(getpos);
+}
+
+void Unitplayer::SetDrawPos(Vec2i getpos){
+	pos.x() = getpos.x() * CHIPSIZE_X;
+	pos.y() = getpos.y() * CHIPSIZE_Y;
+}
 //****************************************************************
 // ÉQÉbÉ^Å[
 //****************************************************************
@@ -81,8 +90,6 @@ Status Unitplayer::GetStatus(){
 }
 
 Unitlist Unitplayer::GetUnitlist(){
-	unitlist->pos = Vec2i((int)pos.x(), (int)pos.y());
-
 	return Unitlist{
 		unitlist->num,
 		unitlist->pos,
@@ -97,6 +104,10 @@ Vec2f Unitplayer::GetSelectPos(){
 	return Vec2f(500, -HEIGHT / 3);
 }
 
+Vec2i Unitplayer::GetPos(){
+	return unitlist->pos;
+}
+
 //Job Unitplayer::GetJob(){
 //	return job;
 //}
@@ -104,13 +115,13 @@ Vec2f Unitplayer::GetSelectPos(){
 // å¸Ç´Ç…ÇÊÇ¡Çƒà⁄ìÆÇ∑ÇÈèàóù
 void Unitplayer::Move(Direction ui_direction){
 	int speed = 10;
-
 	switch (direction)
 	{
 	case Direction::NORTH:
 		switch (ui_direction)
 		{
 		case Direction::NORTH:
+			move_limit.y() -= speed;
 			pos.y() += speed;
 			break;
 		case Direction::SOUTH:
@@ -131,6 +142,7 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::NORTH;
 			break;
 		case Direction::SOUTH:
+			move_limit.y() -= speed;
 			pos.y() -= speed;
 			break;
 		case Direction::EAST:
@@ -151,6 +163,7 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::SOUTH;
 			break;
 		case Direction::EAST:
+			move_limit.x() -= speed;
 			pos.x() += speed;
 			break;
 		case Direction::WEST:
@@ -171,12 +184,16 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::EAST;
 			break;
 		case Direction::WEST:
+			move_limit.x() -= speed;
 			pos.x() -= speed;
 			break;
 		}
 		break;
 	}
-
+	if (move_limit.x() < 0 || move_limit.y() < 0){
+		can_move = false;
+		move_limit = Vec2f(CHIPSIZE_X, CHIPSIZE_Y);
+	}
 }
 
 void Unitplayer::Animation(){
