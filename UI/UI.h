@@ -7,7 +7,7 @@ struct UI{
 class Ui{
 private:
 	Font font = Font("res/meiryo.ttc");
-	int font_size = 50;
+	int font_size = 40;
 	UI command_board;
 	UI command;
 	UI status_board;
@@ -15,21 +15,23 @@ private:
 	float animation;
 	int instruction;
 	bool action;
-	//ÉvÉåÉCÉÑÅ[Ç©ÇÁÇ‡ÇÁÇ§èÓïÒ
 	
-	Vec2f plyer_pos;
+	
 
 	//GetèÓïÒ
-	Direction direction;
 	int number;
 	bool attack;
+	bool skill;
+	Vec2i player_pos;
+	float cost;
 public:
 	Ui();
 	void Update();
 	void Draw(Status status);
 	void BoardDraw();
-	void OperatePlayer();
-	void AttakPlayer(int end);
+	Direction OperatePlayer();
+	void AttakPlayer();
+	void SkillPlayer();
 	void Move();
 	void Animation();
 	void OperateCursor();
@@ -37,8 +39,12 @@ public:
 
 	void SetDir(Direction set);
 	void SetUnitNum(int set);
-
-	Direction GetDir();
+	void SetUnitPos(Vec2i pos);
+	void SetPlayerCost(int cost);
+	
 	int GetUnitNum();
 	bool IsAttacked();
+	bool IsSkilled();
+	Vec2i GetUnitPos();
+	int GetPlayerCost();
 };
