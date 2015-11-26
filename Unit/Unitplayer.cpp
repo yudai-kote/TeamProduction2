@@ -121,6 +121,7 @@ void Unitplayer::Move(Direction ui_direction){
 		switch (ui_direction)
 		{
 		case Direction::NORTH:
+			unitlist->pos.y() += 1;
 			move_limit.y() -= speed;
 			pos.y() += speed;
 			break;
@@ -142,6 +143,7 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::NORTH;
 			break;
 		case Direction::SOUTH:
+			unitlist->pos.y() -= 1;
 			move_limit.y() -= speed;
 			pos.y() -= speed;
 			break;
@@ -163,6 +165,7 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::SOUTH;
 			break;
 		case Direction::EAST:
+			unitlist->pos.x() += 1;
 			move_limit.x() -= speed;
 			pos.x() += speed;
 			break;
@@ -184,6 +187,7 @@ void Unitplayer::Move(Direction ui_direction){
 			direction = Direction::EAST;
 			break;
 		case Direction::WEST:
+			unitlist->pos.x() -= 1;
 			move_limit.x() -= speed;
 			pos.x() -= speed;
 			break;
