@@ -1,26 +1,35 @@
 #include "Unitenemy.h"
 
-void Unitenemy::update(){
-	astar.setEnemyPos(pos);
+Unitenemy::Unitenemy(){
+	direction = Direction::NONE;
+	is_attack = false;
+	can_move = false;
+	chara_type = Animationtype::NORMAL;
+}
+
+void Unitenemy::Setup(){
+
+
+}
+void Unitenemy::Update(){
+	astar.setEnemyPos(unitlist->pos);
 	astar.update();
 }
 
-void Unitenemy::draw(){
-	drawFillBox(pos.x() * 50, pos.y() * 50, size.x(), size.y(), Color::red);
+void Unitenemy::Draw(){
+	drawFillBox(pos.x(), pos.y(), size.x(), size.y(), color);
 	astar.draw();
 }
-
-Vec2f Unitenemy::getPos(){
-	return pos;
-}
-
-void Unitenemy::setDirection(int direction){
+//****************************************************************
+// セッター
+//****************************************************************
+void Unitenemy::SetDirection(int direction){
 
 	if (env.isPushKey(GLFW_KEY_SPACE)){
 #if(1)
 		switch (direction)
 		{
-		case static_cast<int>(Direction::NORTH):
+		case static_cast<int>(Direction::NORTH) :
 			pos.y() += 1;
 			break;
 		case static_cast<int>(Direction::SOUTH) :
@@ -44,23 +53,55 @@ void Unitenemy::setDirection(int direction){
 	}
 }
 
-void Unitenemy::setPos(Vec2f getpos){
-	pos = getpos;
+void Unitenemy::SetUnitlistPos(Vec2i getpos){
+	unitlist->pos = getpos;
+	SetDrawPos(getpos);
 }
 
+void Unitenemy::SetDrawPos(Vec2i getpos){
+	pos.x() = getpos.x() * CHIPSIZE_X;
+	pos.y() = getpos.y() * CHIPSIZE_Y;
+}
 
-void Unitenemy::setAstarMap(std::vector<std::vector<int>> getmap){
+void Unitenemy::SetAstarMap(std::vector<std::vector<int>> getmap){
 	astar.setMap(getmap);
 }
 
-void Unitenemy::setAstarPlayerPos(Vec2f player_pos){
-	if (player_pos != pos){
-		setDirection(astar.getParentPlayer());
+void Unitenemy::SetAstarPlayerPos(Vec2i player_pos){
+	if (player_pos != unitlist->pos){
+		SetDirection(astar.getParentPlayer());
 	}
 	astar.setPlayerPos(player_pos);
-	//std::cout << "止まって　" <<  pos << std::endl;
 }
 
-void Unitenemy::astarSetup(Vec2f player_pos){
-	astar.setup(pos, player_pos);
+void Unitenemy::AstarSetup(Vec2i player_pos){
+	astar.setup(unitlist->pos, player_pos);
 }
+
+//****************************************************************
+// ゲッター
+//****************************************************************
+
+Vec2i Unitenemy::GetPos(){
+	return unitlist->pos;
+}
+
+int Unitenemy::GetNum(){
+	return unitlist->num;
+}
+Unitlist Unitenemy::GetUnitlist(){
+	return Unitlist{
+		unitlist->num,
+		unitlist->pos,
+	};
+}
+Status Unitenemy::GetStatus(){
+	return Status{
+		status->hp,
+		status->power,
+		status->magic_power,
+		status->defense,
+		status->magic_defense,
+	};
+}
+
