@@ -11,25 +11,22 @@ private:
 
 public:
 
+	Unitenemy();
 
 	void Setup();
 	void Update();
 	void Draw();
 
-	Unitenemy(Vec2f itrpos){
-		pos = itrpos;
-	};
 
-	void draw();
-	void update();
+	void SetDirection(int direction);
+	void SetUnitlistPos(Vec2i getpos);
+	void SetDrawPos(Vec2i getpos);
+	void SetAstarMap(std::vector<std::vector<int>> getmap);
+	void SetAstarPlayerPos(Vec2i pos);
+	void AstarSetup(Vec2i pos);
 
-	Vec2f getPos();
-	void setDirection(int direction);
-	void setPos(Vec2f getpos);
-
-
-	void setAstarMap(std::vector<std::vector<int>> getmap);
-	void setAstarPlayerPos(Vec2f pos);
-	void astarSetup(Vec2f pos);
-
+	Vec2i GetPos();
+	int GetNum();
+	Unitlist GetUnitlist();
+	Status GetStatus();
 };
