@@ -5,7 +5,7 @@
 class Unitplayer : public Chara{
 private:
 
-	void Move(Direction ui_direction);
+	
 	void Animation();
 
 	Font font = Font("res/meiryo.ttc");
@@ -28,7 +28,7 @@ public:
 	//セレクトに使う関数
 	Vec2f GetSelectPos();
 
-
+	void Move(Direction ui_direction);
 	//マップからcanmoveをもらうセッター
 	void SetCanMove(bool can_move_);
 	//マップからisattackをもらうセッター
