@@ -24,7 +24,7 @@ private:
 	Ui ui_;
 
 	std::list<Unitplayer*> l_player;
-
+	std::list<Unitenemy*> l_enemy;
 	Scenename gamechange;
 
 	bool turn;

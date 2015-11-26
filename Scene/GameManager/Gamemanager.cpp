@@ -98,17 +98,25 @@ void Gamemanager::Draw(){
 		unitselect_->Draw();
 		break;
 	case Scenename::GAMEMAIN:
+		glPushMatrix();
+		glTranslated(-(ui_.GetUnitPos().x()*CHIPSIZE_X), -(ui_.GetUnitPos().y()*CHIPSIZE_Y),0);
 		map_.Draw();
-
+		
 		map_.DrawMagicrange(3);
 		for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
 		{
 			map_.Drawcursolpos(ui_.GetUnitPos());
+			
+			
+			(*itr)->Draw();
+
+		}
+		glPopMatrix();
+		for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
+		{
 			if ((*itr)->GetNum() == ui_.GetUnitNum()){
 				ui_.Draw((*itr)->GetStatus());
 			}
-			(*itr)->Draw();
-
 		}
 		break;
 	case Scenename::RESULT:
@@ -125,7 +133,9 @@ void Gamemanager::Shift(){
 	{
 	case Scenename::UNITSELECT:
 		gamechange = unitselect_->Shift();
-		Setup();
+		if (env.isPushKey('A')){
+			Setup();
+		}
 		break;
 	case Scenename::GAMEMAIN:
 		if (env.isPushKey('A')){
