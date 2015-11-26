@@ -53,7 +53,7 @@ void Unitplayer::SetIsAttack(bool is_attack_){
 }
 
 void Unitplayer::SetDirection(Direction ui_direction){
-	if (can_move == true)
+	//if (can_move == true)
 		Move(ui_direction);
 	direction = ui_direction;
 
@@ -114,7 +114,7 @@ Vec2i Unitplayer::GetPos(){
 
 // Œü‚«‚É‚æ‚Á‚ÄˆÚ“®‚·‚éˆ—
 void Unitplayer::Move(Direction ui_direction){
-	int speed = 10;
+	int speed = 128;
 	switch (direction)
 	{
 	case Direction::NORTH:
