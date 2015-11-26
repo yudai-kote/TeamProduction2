@@ -7,6 +7,8 @@ class Title : public Classbase{
 
 private:
 
+	Texture title;
+	Texture press_enter;
 
 public:
 
