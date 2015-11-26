@@ -49,17 +49,17 @@ public:
 
 	Astar();
 
-	void setup(Vec2f enemy_pos, Vec2f player_pos);
+	void setup(Vec2i enemy_pos, Vec2i player_pos);
 	void update();
 
 	void draw();
 
 	int getParentPlayer();
 
-	void setEnemyPos(Vec2f enemy_pos);
-	void setPlayerPos(Vec2f player_pos);
+	void setEnemyPos(Vec2i enemy_pos);
+	void setPlayerPos(Vec2i player_pos);
 	void setMap(std::vector<std::vector<int>>setmap);
 
-	bool HitGoll(Vec2f enemy_pos, Vec2f player_pos, std::vector<std::vector<int>>setmap);
+	bool HitGoll(Vec2i enemy_pos, Vec2i player_pos, std::vector<std::vector<int>>setmap);
 };
 
