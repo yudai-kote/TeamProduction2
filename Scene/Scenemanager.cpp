@@ -16,7 +16,7 @@ void Scenemanager::Update(){
 	switch (scenechange)
 	{
 	case Scenename::TITLE:
-
+		
 
 		break;
 	case Scenename::GAMEMANAGER:
@@ -31,7 +31,7 @@ void Scenemanager::Draw(){
 
 	switch (scenechange){
 	case Scenename::TITLE:
-
+		title_.Draw();
 
 		break;
 
