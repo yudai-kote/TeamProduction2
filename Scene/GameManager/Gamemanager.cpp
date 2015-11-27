@@ -46,23 +46,24 @@ void Gamemanager::Setup(){
 	}
 	for (int i = 6; i < 11; i++){
 		l_enemy.push_back(new WarriorE(i));
+		
 	}
 	for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
 	{
 		switch ((*enemyitr)->GetNum()){
-		case 1:
+		case 6:
 			(*enemyitr)->SetUnitlistPos(Vec2i(5, 0));
 			break;
-		case 2:
+		case 7:
 			(*enemyitr)->SetUnitlistPos(Vec2i(5, 2));
 			break;
-		case 3:
+		case 8:
 			(*enemyitr)->SetUnitlistPos(Vec2i(5, 4));
 			break;
-		case 4:
+		case 9:
 			(*enemyitr)->SetUnitlistPos(Vec2i(5, 6));
 			break;
-		case 5:
+		case 10:
 			(*enemyitr)->SetUnitlistPos(Vec2i(5, 8));
 			break;
 		}
@@ -72,6 +73,16 @@ void Gamemanager::Setup(){
 			(*enemyitr)->AstarSetup((*playeritr)->GetPos());
 		}
 		(*enemyitr)->SetAstarMap(map_.GetChipType());
+	}
+
+	for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
+	{
+		map_.Setplayerlist((*playeritr)->GetUnitlist());
+	}
+
+	for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
+	{
+		map_.Setenemylist((*enemyitr)->GetUnitlist());
 	}
 
 	ui_.SetPlayerCost(50);
@@ -94,14 +105,13 @@ void Gamemanager::Update(){
 			cost = ui_.GetPlayerCost();
 			for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
 			{
-
 				if ((*itr)->GetNum() == ui_.GetUnitNum()){
 
-					if (!map_.Isunitmoving(ui_.GetUnitNum(), ui_.OperatePlayer())){
+					//if (!map_.Isunitmoving(ui_.GetUnitNum(), ui_.OperatePlayer())){
 						(*itr)->Move(ui_.OperatePlayer());
 
 						ui_.SetUnitPos((*itr)->GetPos());
-					}
+					//}
 					if (ui_.IsAttacked()){
 						//if (map_.Isattackhit(ui_.GetUnitNum(), )){
 						//プレイヤーの攻撃力を見て、エネミーのHPを減らす
@@ -110,9 +120,9 @@ void Gamemanager::Update(){
 					}
 					if (ui_.IsSkilled()){
 
-						if (map_.Ismagichit(ui_.GetUnitNum(), ui_.GetUnitPos())){
+						//if (map_.Ismagichit(ui_.GetUnitNum(), ui_.GetUnitPos())){
 							//プレイヤーのスキルの範囲と
-						}
+						//}
 					}
 
 				}
@@ -171,8 +181,8 @@ void Gamemanager::Draw(){
 		glTranslated(-(ui_.GetUnitPos().x()*CHIPSIZE_X), -(ui_.GetUnitPos().y()*CHIPSIZE_Y), 0);
 		map_.Draw();
 
-		map_.DrawMagicrange(3);
-		map_.Drawcursolpos(ui_.GetUnitPos());
+		
+		//map_.Drawcursolpos(ui_.GetUnitPos());
 		for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 		{
 			(*playeritr)->Draw();
