@@ -172,7 +172,7 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 	}
 
 	//enemy_unit‚ÌˆÚ“®”»’è
-	if (unit_num <= static_cast<int>(enemy_list.size()))
+	if (unit_num <= static_cast<int>(enemy_list.size()) + static_cast<int>(player_list.size()))
 	{
 		for (auto enemy = enemy_list.begin(); enemy != enemy_list.end(); enemy++)
 		{

@@ -21,6 +21,7 @@ public:
 	void Update();
 	void Draw();
 
+	void Move();
 
 	void SetDirection(Direction direction);
 	void SetUnitlistPos(Vec2i getpos);

@@ -135,12 +135,13 @@ void Gamemanager::Update(){
 			}
 			if (cost <= 0){
 				turn = false;
+				first_move_end = false;
 			}
 		}
 		else if (turn == false){
 			cost = 50;
 
-			
+
 
 			if (first_move_end == true)
 			{
@@ -170,11 +171,12 @@ void Gamemanager::Update(){
 					}
 
 					//行動が終了する処理
-					if (enemyitr == l_enemy.end() && (*enemyitr)->GetCost() == 0)
+					if (enemyitr == l_enemy.end() && (*enemyitr)->GetCost() < 0)
 					{
 						for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
 						{
 							(*enemyitr)->SetIsMove(true);
+							(*enemyitr)->SetCost(10);
 						}
 						turn = true;
 					}
@@ -203,7 +205,13 @@ void Gamemanager::Update(){
 							{
 								// ここでコストを減らす
 								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
-								//Astar更新
+								if (env.isPushKey(GLFW_KEY_SPACE)){
+									std::cout << (*enemyitr)->GetCost() << std::endl;
+									if (map_.Isunitmoving((*enemyitr)->GetNum(), (*enemyitr)->GetDirection()) == true){
+										//Astar更新
+										(*enemyitr)->Move();
+									}
+								}
 								(*enemyitr)->Update();
 							}
 						}
