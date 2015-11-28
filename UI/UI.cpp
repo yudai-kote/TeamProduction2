@@ -59,8 +59,10 @@ void Ui::Draw(Status status){
 }
 
 void Ui::OperatePlayer(){
+	p_direction = Direction::NONE;
 	if (action == true){
 		direction = Direction::NONE;
+		
 		if (env.isPushKey('W')){
 			if (p_direction == direction){
 				cost--;
@@ -75,11 +77,11 @@ void Ui::OperatePlayer(){
 		if (env.isPushKey('A')){
 			if (p_direction == direction){
 				cost--;
-				direction = Direction::EAST;
+				direction = Direction::WEST;
 			}
 			else{
 				cost--;
-				p_direction = Direction::EAST;
+				p_direction = Direction::WEST;
 			}
 			
 		}
@@ -96,11 +98,11 @@ void Ui::OperatePlayer(){
 		if (env.isPushKey('D')){
 			if (p_direction == direction){
 				cost--;
-				direction = Direction::WEST;
+				direction = Direction::EAST;
 			}
 			else{
 				cost--;
-				p_direction = Direction::WEST;
+				p_direction = Direction::EAST;
 			}
 			
 		}
