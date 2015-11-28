@@ -48,6 +48,7 @@ public:
 	int GetNum();
 	//ジョブを返す関数（使ってない）
 	Job GetJob();
+	Direction GetDirection();
 
 };
 

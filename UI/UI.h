@@ -24,12 +24,14 @@ private:
 	bool skill;
 	Vec2i player_pos;
 	float cost;
+	Direction direction;
+	Direction p_direction;
 public:
 	Ui();
 	void Update();
 	void Draw(Status status);
 	void BoardDraw();
-	Direction OperatePlayer();
+	void OperatePlayer();
 	void AttakPlayer();
 	void SkillPlayer();
 	void Move();
@@ -38,6 +40,7 @@ public:
 	void Select();
 
 	void SetDir(Direction set);
+	void SetPDir(Direction set);
 	void SetUnitNum(int set);
 	void SetUnitPos(Vec2i pos);
 	void SetPlayerCost(int cost);
@@ -47,4 +50,6 @@ public:
 	bool IsSkilled();
 	Vec2i GetUnitPos();
 	int GetPlayerCost();
+	Direction GetDir();
+	Direction GetPDir();
 };

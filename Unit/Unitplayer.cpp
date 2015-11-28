@@ -108,6 +108,10 @@ Vec2i Unitplayer::GetPos(){
 	return unitlist->pos;
 }
 
+Direction Unitplayer::GetDirection(){
+	return direction;
+}
+
 //Job Unitplayer::GetJob(){
 //	return job;
 //}
