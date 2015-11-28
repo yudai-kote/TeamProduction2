@@ -28,7 +28,9 @@ void Unitenemy::Draw(){
 void Unitenemy::SetDirection(Direction getdirection){
 	Vec2i speed = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
 	direction = getdirection;
+
 	if (env.isPushKey(GLFW_KEY_SPACE)){
+		move_cost--;
 #if(1)
 		switch (direction)
 		{
@@ -57,6 +59,12 @@ void Unitenemy::SetDirection(Direction getdirection){
 		if (env.isPushKey('D')){ pos.x() += 1; }
 #endif
 
+		if (move_cost <= 0)
+		{
+			is_move = true;
+		}
+
+
 	}
 }
 
@@ -83,6 +91,14 @@ void Unitenemy::SetAstarPlayerPos(Vec2i player_pos){
 
 void Unitenemy::AstarSetup(Vec2i player_pos){
 	astar.setup(unitlist->pos, player_pos);
+}
+
+void Unitenemy::SetCost(int getcost){
+	move_cost = getcost;
+}
+
+void Unitenemy::SetIsMove(bool getis_move){
+	is_move = getis_move;
 }
 
 //****************************************************************
@@ -117,3 +133,9 @@ Direction Unitenemy::GetDirection(){
 	return direction;
 }
 
+int Unitenemy::GetCost(){
+	return move_cost;
+}
+bool Unitenemy::GetIsMove(){
+	return is_move;
+}

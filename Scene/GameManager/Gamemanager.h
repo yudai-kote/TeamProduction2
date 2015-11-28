@@ -29,6 +29,8 @@ private:
 
 	bool turn;
 	int cost;
+
+	bool first_move_end = false;
 public:
 	Gamemanager();
 

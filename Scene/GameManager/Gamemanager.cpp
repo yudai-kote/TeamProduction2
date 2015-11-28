@@ -47,7 +47,7 @@ void Gamemanager::Setup(){
 	}
 	for (int i = 6; i < 11; i++){
 		l_enemy.push_back(new WarriorE(i));
-		
+
 	}
 	for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
 	{
@@ -83,9 +83,9 @@ void Gamemanager::Setup(){
 	{
 		map_.Setenemylist((*enemyitr)->GetUnitlist());
 	}
-	
 
-	ui_.SetPlayerCost(50);
+
+	ui_.SetPlayerCost(20);
 	ui_.SetUnitNum(1);
 	turn = true;
 }
@@ -101,21 +101,21 @@ void Gamemanager::Update(){
 		ui_.Move();
 
 		if (turn == true){
-			
+
 			cost = ui_.GetPlayerCost();
 			for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
 			{
-				
+
 				if ((*itr)->GetNum() == ui_.GetUnitNum()){
 					ui_.SetPDir((*itr)->GetDirection());
 					ui_.SetUnitPos((*itr)->GetPos());
 					ui_.OperatePlayer();
 
 					(*itr)->Move(ui_.GetDir());
-					if (map_.Isunitmoving(ui_.GetUnitNum(),ui_.GetDir())){
+					if (map_.Isunitmoving(ui_.GetUnitNum(), ui_.GetDir())){
 						(*itr)->Move(ui_.GetDir());
 						ui_.SetUnitPos((*itr)->GetPos());
-						
+
 					}
 					if (ui_.IsAttacked()){
 						//if (map_.Isattackhit(ui_.GetUnitNum(), )){
@@ -126,7 +126,7 @@ void Gamemanager::Update(){
 					if (ui_.IsSkilled()){
 
 						//if (map_.Ismagichit(ui_.GetUnitNum(), ui_.GetUnitPos())){
-							//プレイヤーのスキルの範囲と
+						//プレイヤーのスキルの範囲と
 						//}
 					}
 
@@ -140,31 +140,81 @@ void Gamemanager::Update(){
 		else if (turn == false){
 			cost = 50;
 
+			
 
-
-
-			// エネミーとプレイヤー
-			// 近いほうを判定して追いかける
-			for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
+			if (first_move_end == true)
 			{
-				int min_cost = 100000000;
+				// エネミーとプレイヤー
+				// 近いほうを判定して追いかける
+				for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
+				{
+					int min_cost = 100000000;
 
-				for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
-				{
-					CompareCost((*enemyitr)->GetPos(), (*playeritr)->GetPos(), min_cost);
-				}
-				for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
-				{
-					if (min_cost == NowCost((*enemyitr)->GetPos(), (*playeritr)->GetPos()))
+					// 近くのプレイヤーを調べる
+					for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 					{
-						(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
-						(*enemyitr)->Update();
+						CompareCost((*enemyitr)->GetPos(), (*playeritr)->GetPos(), min_cost);
+					}
+					for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
+					{
+						// 一番小さいコストのプレイヤーに再帰をかける
+						if (min_cost == NowCost((*enemyitr)->GetPos(), (*playeritr)->GetPos()))
+						{
+							if ((*enemyitr - 1)->GetIsMove() == true){
+								// ここでコストを減らす
+								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
+								//Astar更新
+								(*enemyitr)->Update();
+							}
+						}
+					}
+
+					//行動が終了する処理
+					if (enemyitr == l_enemy.end() && (*enemyitr)->GetCost() == 0)
+					{
+						for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
+						{
+							(*enemyitr)->SetIsMove(true);
+						}
+						turn = true;
 					}
 				}
 			}
 
+			// 
+			if (first_move_end == false)
+			{
+				//一番最初に動くエネミー
+				for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
+				{
+					if ((*enemyitr)->GetNum() == 6)
+					{
+						int min_cost = 100000000;
 
+						// 近くのプレイヤーを調べる
+						for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
+						{
+							CompareCost((*enemyitr)->GetPos(), (*playeritr)->GetPos(), min_cost);
+						}
+						for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
+						{
+							// 一番小さいコストのプレイヤーに再帰をかける
+							if (min_cost == NowCost((*enemyitr)->GetPos(), (*playeritr)->GetPos()))
+							{
+								// ここでコストを減らす
+								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
+								//Astar更新
+								(*enemyitr)->Update();
+							}
+						}
 
+						if ((*enemyitr)->GetCost() == 0)
+						{
+							first_move_end = true;
+						}
+					}
+				}
+			}
 		}
 		break;
 	case Scenename::RESULT:
@@ -186,7 +236,7 @@ void Gamemanager::Draw(){
 		glTranslated(-(ui_.GetUnitPos().x()*CHIPSIZE_X), -(ui_.GetUnitPos().y()*CHIPSIZE_Y), 0);
 		map_.Draw();
 
-		
+
 		map_.Drawcursolpos(ui_.GetUnitPos());
 		for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 		{

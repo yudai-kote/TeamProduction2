@@ -28,8 +28,6 @@ bool Map::Isunitmoving(int unit_num, Direction direction)
 	//player_unit‚ÌˆÚ“®”»’è
 
 	for (auto it : this->player_list)
-		std::cout << it.pos << std::endl;
-
 	if (unit_num  <= static_cast<int>(player_list.size()))
 	{
 		for (auto player = player_list.begin(); player != player_list.end(); player++)
