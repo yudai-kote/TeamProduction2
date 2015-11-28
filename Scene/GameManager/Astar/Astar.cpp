@@ -148,6 +148,7 @@ int Astar::parentUpdate(Vec2i _enemy_pos){
 		parentUpdate(Vec2i(_enemy_pos.x() + 1, _enemy_pos.y()));
 		break;
 	}
+	return static_cast<int>(Direction::NONE);
 
 }
 

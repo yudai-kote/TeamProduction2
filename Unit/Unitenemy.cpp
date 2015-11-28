@@ -22,19 +22,15 @@ void Unitenemy::Draw(){
 	drawFillBox(pos.x(), pos.y(), size.x(), size.y(), color);
 	astar.draw();
 }
-//****************************************************************
-// セッター
-//****************************************************************
-void Unitenemy::SetDirection(Direction getdirection){
-	Vec2i speed = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
-	direction = getdirection;
 
-	if (env.isPushKey(GLFW_KEY_SPACE)){
+void Unitenemy::Move(){
+	Vec2i speed = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
+	if (env.isPushKey(GLFW_KEY_SPACE))
+	{
 		move_cost--;
-#if(1)
 		switch (direction)
 		{
-		case Direction::NORTH :
+		case Direction::NORTH:
 			unitlist->pos.y() += 1;
 			pos.y() += speed.y();
 			break;
@@ -42,22 +38,15 @@ void Unitenemy::SetDirection(Direction getdirection){
 			unitlist->pos.y() -= 1;
 			pos.y() -= speed.y();
 			break;
-		case Direction::WEST :
+		case Direction::WEST:
 			unitlist->pos.x() += 1;
 			pos.x() -= speed.x();
 			break;
-		case Direction::EAST :
+		case Direction::EAST:
 			unitlist->pos.x() -= 1;
 			pos.x() += speed.x();
 			break;
 		}
-
-#else if
-		if (env.isPushKey('W')){ pos.y() -= 1; }
-		if (env.isPushKey('S')){ pos.y() += 1; }
-		if (env.isPushKey('A')){ pos.x() -= 1; }
-		if (env.isPushKey('D')){ pos.x() += 1; }
-#endif
 
 		if (move_cost <= 0)
 		{
@@ -66,6 +55,13 @@ void Unitenemy::SetDirection(Direction getdirection){
 
 
 	}
+}
+
+//****************************************************************
+// セッター
+//****************************************************************
+void Unitenemy::SetDirection(Direction getdirection){
+	direction = getdirection;
 }
 
 void Unitenemy::SetUnitlistPos(Vec2i getpos){

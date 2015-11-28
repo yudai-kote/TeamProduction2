@@ -6,7 +6,7 @@ class Astar
 {
 private:
 
-	Font font = Font("res/kokubanB.ttf");
+	Font font = Font("res/meiryo.ttc");
 	class AstarChip
 	{
 	public:
