@@ -28,6 +28,7 @@ void Gamemanager::Setup(){
 		switch ((*playeritr)->GetNum()){
 		case 1:
 			(*playeritr)->SetUnitlistPos(Vec2i(0, 0));
+			ui_.SetUnitPos((*playeritr)->GetPos());
 			break;
 		case 2:
 			(*playeritr)->SetUnitlistPos(Vec2i(0, 2));
@@ -74,16 +75,15 @@ void Gamemanager::Setup(){
 		}
 		(*enemyitr)->SetAstarMap(map_.GetChipType());
 	}
-
 	for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 	{
 		map_.Setplayerlist((*playeritr)->GetUnitlist());
 	}
-
 	for (auto enemyitr = l_enemy.begin(); enemyitr != l_enemy.end(); ++enemyitr)
 	{
 		map_.Setenemylist((*enemyitr)->GetUnitlist());
 	}
+	
 
 	ui_.SetPlayerCost(50);
 	ui_.SetUnitNum(1);
@@ -101,17 +101,22 @@ void Gamemanager::Update(){
 		ui_.Move();
 
 		if (turn == true){
-
+			
 			cost = ui_.GetPlayerCost();
 			for (auto itr = l_player.begin(); itr != l_player.end(); ++itr)
 			{
+				
 				if ((*itr)->GetNum() == ui_.GetUnitNum()){
+					ui_.SetPDir((*itr)->GetDirection());
+					ui_.SetUnitPos((*itr)->GetPos());
+					ui_.OperatePlayer();
 
-					//if (!map_.Isunitmoving(ui_.GetUnitNum(), ui_.OperatePlayer())){
-						(*itr)->Move(ui_.OperatePlayer());
-
+					(*itr)->Move(ui_.GetDir());
+					if (map_.Isunitmoving(ui_.GetUnitNum(),ui_.GetDir())){
+						(*itr)->Move(ui_.GetDir());
 						ui_.SetUnitPos((*itr)->GetPos());
-					//}
+						
+					}
 					if (ui_.IsAttacked()){
 						//if (map_.Isattackhit(ui_.GetUnitNum(), )){
 						//プレイヤーの攻撃力を見て、エネミーのHPを減らす
@@ -182,7 +187,7 @@ void Gamemanager::Draw(){
 		map_.Draw();
 
 		
-		//map_.Drawcursolpos(ui_.GetUnitPos());
+		map_.Drawcursolpos(ui_.GetUnitPos());
 		for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 		{
 			(*playeritr)->Draw();

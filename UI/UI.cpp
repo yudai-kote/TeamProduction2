@@ -58,24 +58,51 @@ void Ui::Draw(Status status){
 	font.draw("s“®P" + std::to_string((int)cost), Vec2f(-830, 445 - 600), Color::white);
 }
 
-Direction Ui::OperatePlayer(){
+void Ui::OperatePlayer(){
 	if (action == true){
-		
+		direction = Direction::NONE;
 		if (env.isPushKey('W')){
-			cost-=0.5;
-			return Direction::NORTH;
+			if (p_direction == direction){
+				cost--;
+				direction = Direction::NORTH;
+			}
+			else{
+				cost--;
+				p_direction = Direction::NORTH;
+			}
+			
 		}
 		if (env.isPushKey('A')){
-			cost -= 0.5;
-			return Direction::WEST;
+			if (p_direction == direction){
+				cost--;
+				direction = Direction::EAST;
+			}
+			else{
+				cost--;
+				p_direction = Direction::EAST;
+			}
+			
 		}
 		if (env.isPushKey('S')){
-			cost -= 0.5;
-			return Direction::SOUTH;
+			if (p_direction == direction){
+				cost--;
+				direction = Direction::SOUTH;
+			}
+			else{
+				cost--;
+				p_direction = Direction::SOUTH;
+			}
 		}
 		if (env.isPushKey('D')){
-			cost -= 0.5;
-			return Direction::EAST;
+			if (p_direction == direction){
+				cost--;
+				direction = Direction::WEST;
+			}
+			else{
+				cost--;
+				p_direction = Direction::WEST;
+			}
+			
 		}
 		if (env.isPushKey(GLFW_KEY_BACKSPACE)){
 			action = false;
@@ -83,7 +110,7 @@ Direction Ui::OperatePlayer(){
 		}
 		
 	}
-	return Direction::NONE;
+	
 }
 
 void Ui::OperateCursor(){
@@ -185,6 +212,12 @@ Vec2i Ui::GetUnitPos(){
 int Ui::GetPlayerCost(){
 	return (int)cost;
 }
+Direction Ui::GetDir(){
+	return direction;
+}
+Direction Ui::GetPDir(){
+	return p_direction;
+}
 
 
 void Ui::SetUnitNum(int set){
@@ -196,4 +229,10 @@ void Ui::SetUnitPos(Vec2i pos){
 }
 void Ui::SetPlayerCost(int cost){
 	this->cost = cost;
+}
+void Ui::SetDir(Direction set){
+	direction = set;
+}
+void Ui::SetPDir(Direction set){
+	p_direction = set;
 }
