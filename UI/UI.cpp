@@ -8,6 +8,7 @@ Ui::Ui(){
 	action = false;
 	attack = false;
 	skill = false;
+	dir = false;
 	command_board.pos = Vec2f(-960, -540);
 	command_board.size = Vec2f(300, 1080);
 
@@ -43,77 +44,104 @@ void Ui::Draw(Status status){
 		Vec2f(-WIDTH / 20, -250 - font_size * 2), Color::white);
 
 	font.draw("魔法攻撃力　" + std::to_string(status.magic_power),
-		Vec2f(- WIDTH /20, -300 - font_size * 3), Color::white);
+		Vec2f(-WIDTH / 20, -300 - font_size * 3), Color::white);
 
 	font.draw("防御力　　　" + std::to_string(status.defense),
 		Vec2f(350, -150 - font_size * 4), Color::white);
 
 	font.draw("魔法防御力　" + std::to_string(status.magic_defense),
-		Vec2f(350 , -200 - font_size * 5), Color::white);
+		Vec2f(350, -200 - font_size * 5), Color::white);
 
-	font.draw("移動" ,Vec2f(-830, 445), Color::white);
-	font.draw("攻撃", Vec2f(-830, 445-150), Color::white);
-	font.draw("スキル", Vec2f(-830, 445-300), Color::white);
-	font.draw("STATUS", Vec2f(-830, 445-450), Color::white);
+	font.draw("移動", Vec2f(-830, 445), Color::white);
+	font.draw("攻撃", Vec2f(-830, 445 - 150), Color::white);
+	font.draw("スキル", Vec2f(-830, 445 - 300), Color::white);
+	font.draw("STATUS", Vec2f(-830, 445 - 450), Color::white);
 	font.draw("行動P" + std::to_string((int)cost), Vec2f(-830, 445 - 600), Color::white);
 }
 
+
+
+
 void Ui::OperatePlayer(){
-	p_direction = Direction::NONE;
 	if (action == true){
-		direction = Direction::NONE;
-		
 		if (env.isPushKey('W')){
-			if (p_direction == direction){
-				cost--;
-				direction = Direction::NORTH;
-			}
-			else{
+			direction = Direction::NORTH;
+			if (s_direction == direction){
 				cost--;
 				p_direction = Direction::NORTH;
+				dir = false;
+				goto End;
 			}
-			
+			else{
+				cost--;
+				direction = Direction::NORTH;
+				dir = true;
+				goto End;
+			}
+
 		}
 		if (env.isPushKey('A')){
-			if (p_direction == direction){
-				cost--;
-				direction = Direction::WEST;
-			}
-			else{
+			direction = Direction::WEST;
+			if (s_direction == direction){
 				cost--;
 				p_direction = Direction::WEST;
-			}
-			
-		}
-		if (env.isPushKey('S')){
-			if (p_direction == direction){
-				cost--;
-				direction = Direction::SOUTH;
+				dir = false;
+				goto End;
 			}
 			else{
 				cost--;
+				direction = Direction::WEST;
+				dir = true;
+				goto End;
+			}
+
+		}
+		if (env.isPushKey('S')){
+			direction = Direction::SOUTH;
+			if (s_direction == direction){
+				cost--;
 				p_direction = Direction::SOUTH;
+				dir = false;
+				goto End;
+			}
+			else{
+				cost--;
+				direction = Direction::SOUTH;
+				dir = true;
+				goto End;
 			}
 		}
 		if (env.isPushKey('D')){
-			if (p_direction == direction){
+			direction = Direction::EAST;
+			if (s_direction == direction){
 				cost--;
-				direction = Direction::EAST;
+				p_direction = Direction::EAST;
+				dir = false;
+				goto End;
 			}
 			else{
 				cost--;
-				p_direction = Direction::EAST;
+				direction = Direction::EAST;
+				dir = true;
+				goto End;
 			}
-			
+
 		}
 		if (env.isPushKey(GLFW_KEY_BACKSPACE)){
 			action = false;
-			
+
 		}
+		direction = Direction::NONE;
+		p_direction = Direction::NONE;
 		
 	}
-	
+	direction = Direction::NONE;
+	p_direction = Direction::NONE;
+End:;
 }
+
+
+
 
 void Ui::OperateCursor(){
 	if (action == false){
@@ -146,7 +174,7 @@ void Ui::Select(){
 		{
 		case 0:
 			action = true;
-			
+
 			break;
 		case 1:
 			AttakPlayer();
@@ -161,23 +189,27 @@ void Ui::Select(){
 }
 
 void Ui::Move(){
-	
+
 	OperateCursor();
-	
-		Select();
-	
-	
+
+	Select();
+
+
+
+}
+
+void Ui::False(){
 
 }
 
 void Ui::AttakPlayer(){//int end){
 	//if (end == true){
-		action = false;
-		attack = false;
+	action = false;
+	attack = false;
 	//}
-//	else {
-//		attack = true;
-//	}
+	//	else {
+	//		attack = true;
+	//	}
 }
 
 void Ui::SkillPlayer(){
@@ -220,7 +252,9 @@ Direction Ui::GetDir(){
 Direction Ui::GetPDir(){
 	return p_direction;
 }
-
+bool Ui::GetDirection(){
+	return dir;
+}
 
 void Ui::SetUnitNum(int set){
 	number = set;
@@ -236,5 +270,5 @@ void Ui::SetDir(Direction set){
 	direction = set;
 }
 void Ui::SetPDir(Direction set){
-	p_direction = set;
+	s_direction = set;
 }
