@@ -37,9 +37,8 @@ void Astar::algorithm(){
 
 	int cost_min = 1000000;
 	Vec2i once_pos = Vec2i::Zero();
-
 	if (_enemy_pos == _player_pos)
-	{
+	{	
 		return;
 	}
 
@@ -62,7 +61,12 @@ void Astar::algorithm(){
 		}
 	}
 
-	map[once_pos.y()][once_pos.x()].search = CLOSE;
+	if (map[once_pos.y()][once_pos.x()].search == OPEN){
+		map[once_pos.y()][once_pos.x()].search = CLOSE;
+	}
+	else{
+		return;
+	}
 
 	for (int direction = 0; direction < static_cast<int>(Direction::NONE); direction++)
 	{
@@ -71,10 +75,10 @@ void Astar::algorithm(){
 		switch (direction)
 		{
 		case static_cast<int>(Direction::NORTH) :
-			search_pos.y() -= 1;
+			search_pos.y() += 1;
 			break;
 		case static_cast<int>(Direction::SOUTH) :
-			search_pos.y() += 1;
+			search_pos.y() -= 1;
 			break;
 		case static_cast<int>(Direction::WEST) :
 			search_pos.x() -= 1;
@@ -124,18 +128,17 @@ int Astar::parentUpdate(Vec2i _enemy_pos){
 	{
 		return enemy_start_parent;
 	}
-
 	switch (map[_enemy_pos.y()][_enemy_pos.x()].parent)
 	{
 	case static_cast<int>(Direction::NORTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å™", Vec2f(map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
-		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() - 1));
+		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() + 1));
 		break;
 	case static_cast<int>(Direction::SOUTH) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
 		//font.draw("Å´", Vec2f(map[_enemy_pos.y()][_enemy_pos.x()].pos.x(), map[_enemy_pos.y()][_enemy_pos.x()].pos.y()), Color::cyan);
-		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() + 1));
+		parentUpdate(Vec2i(_enemy_pos.x(), _enemy_pos.y() - 1));
 		break;
 	case static_cast<int>(Direction::WEST) :
 		enemy_start_parent = map[_enemy_pos.y()][_enemy_pos.x()].parent;
@@ -181,9 +184,11 @@ void Astar::update(){
 int Astar::getParentPlayer(){
 	if (_enemy_pos == _player_pos)
 	{
+		//std::cout << enemy_start_parent << std::endl;
 		return enemy_start_parent;
 	}
 
+	//std::cout << map[_enemy_pos.y()][_enemy_pos.x()].parent << std::endl;
 	switch (map[_enemy_pos.y()][_enemy_pos.x()].parent)
 	{
 	case static_cast<int>(Direction::NORTH) :

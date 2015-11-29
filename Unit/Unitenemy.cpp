@@ -25,8 +25,7 @@ void Unitenemy::Draw(){
 
 void Unitenemy::Move(){
 	Vec2i speed = Vec2i(CHIPSIZE_X, CHIPSIZE_Y);
-	if (env.isPushKey(GLFW_KEY_SPACE))
-	{
+
 		move_cost--;
 		switch (direction)
 		{
@@ -39,22 +38,22 @@ void Unitenemy::Move(){
 			pos.y() -= speed.y();
 			break;
 		case Direction::WEST:
-			unitlist->pos.x() += 1;
+			unitlist->pos.x() -= 1;
 			pos.x() -= speed.x();
 			break;
 		case Direction::EAST:
-			unitlist->pos.x() -= 1;
+			unitlist->pos.x() += 1;
 			pos.x() += speed.x();
 			break;
 		}
 
-		if (move_cost <= 0)
+		if (move_cost < 0)
 		{
 			is_move = true;
 		}
 
 
-	}
+	
 }
 
 //****************************************************************
@@ -79,10 +78,11 @@ void Unitenemy::SetAstarMap(std::vector<std::vector<int>> getmap){
 }
 
 void Unitenemy::SetAstarPlayerPos(Vec2i player_pos){
+	astar.setPlayerPos(player_pos);
 	if (player_pos != unitlist->pos){
 		SetDirection(static_cast<Direction>(astar.getParentPlayer()));
+		//std::cout << astar.getParentPlayer() << std::endl;
 	}
-	astar.setPlayerPos(player_pos);
 }
 
 void Unitenemy::AstarSetup(Vec2i player_pos){

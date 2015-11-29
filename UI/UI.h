@@ -15,7 +15,7 @@ private:
 	float animation;
 	int instruction;
 	bool action;
-	
+	bool dir;
 	
 
 	//GetèÓïÒ
@@ -26,6 +26,7 @@ private:
 	float cost;
 	Direction direction;
 	Direction p_direction;
+	Direction s_direction;
 public:
 	Ui();
 	void Update();
@@ -38,6 +39,7 @@ public:
 	void Animation();
 	void OperateCursor();
 	void Select();
+	void False();
 
 	void SetDir(Direction set);
 	void SetPDir(Direction set);
@@ -48,6 +50,7 @@ public:
 	int GetUnitNum();
 	bool IsAttacked();
 	bool IsSkilled();
+	bool GetDirection();
 	Vec2i GetUnitPos();
 	int GetPlayerCost();
 	Direction GetDir();

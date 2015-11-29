@@ -29,6 +29,7 @@ void Gamemanager::Setup(){
 		case 1:
 			(*playeritr)->SetUnitlistPos(Vec2i(0, 0));
 			ui_.SetUnitPos((*playeritr)->GetPos());
+			ui_.SetPDir((*playeritr)->GetDirection());
 			break;
 		case 2:
 			(*playeritr)->SetUnitlistPos(Vec2i(0, 2));
@@ -85,7 +86,7 @@ void Gamemanager::Setup(){
 	}
 
 
-	ui_.SetPlayerCost(20);
+	ui_.SetPlayerCost(10);
 	ui_.SetUnitNum(1);
 	turn = true;
 }
@@ -107,13 +108,15 @@ void Gamemanager::Update(){
 			{
 
 				if ((*itr)->GetNum() == ui_.GetUnitNum()){
-					ui_.SetPDir((*itr)->GetDirection());
-					ui_.SetUnitPos((*itr)->GetPos());
-					ui_.OperatePlayer();
 
-					(*itr)->Move(ui_.GetDir());
-					if (map_.Isunitmoving(ui_.GetUnitNum(), ui_.GetDir())){
+					ui_.SetUnitPos((*itr)->GetPos());
+					ui_.SetPDir((*itr)->GetDirection());
+					ui_.OperatePlayer();
+					if (ui_.GetDirection()){
 						(*itr)->Move(ui_.GetDir());
+					}
+					if (map_.Isunitmoving(ui_.GetUnitNum(), ui_.GetPDir())){
+						(*itr)->Move(ui_.GetPDir());
 						ui_.SetUnitPos((*itr)->GetPos());
 
 					}
@@ -161,11 +164,16 @@ void Gamemanager::Update(){
 						// 一番小さいコストのプレイヤーに再帰をかける
 						if (min_cost == NowCost((*enemyitr)->GetPos(), (*playeritr)->GetPos()))
 						{
-							if ((*enemyitr - 1)->GetIsMove() == true){
+							if ((*enemyitr--)->GetIsMove() == true){
 								// ここでコストを減らす
-								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
-								//Astar更新
 								(*enemyitr)->Update();
+								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
+								if (env.isPushKey(GLFW_KEY_SPACE)){
+									if (map_.Isunitmoving((*enemyitr)->GetNum(), (*enemyitr)->GetDirection()) == true){
+										//Astar更新
+										(*enemyitr)->Move();
+									}
+								}
 							}
 						}
 					}
@@ -194,7 +202,7 @@ void Gamemanager::Update(){
 						int min_cost = 100000000;
 
 						// 近くのプレイヤーを調べる
-						for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
+  						for (auto playeritr = l_player.begin(); playeritr != l_player.end(); ++playeritr)
 						{
 							CompareCost((*enemyitr)->GetPos(), (*playeritr)->GetPos(), min_cost);
 						}
@@ -204,19 +212,22 @@ void Gamemanager::Update(){
 							if (min_cost == NowCost((*enemyitr)->GetPos(), (*playeritr)->GetPos()))
 							{
 								// ここでコストを減らす
+								(*enemyitr)->Update();
 								(*enemyitr)->SetAstarPlayerPos((*playeritr)->GetPos());
+								//std::cout << static_cast<int>((*enemyitr)->GetDirection()) << std::endl;
 								if (env.isPushKey(GLFW_KEY_SPACE)){
-									std::cout << (*enemyitr)->GetCost() << std::endl;
 									if (map_.Isunitmoving((*enemyitr)->GetNum(), (*enemyitr)->GetDirection()) == true){
 										//Astar更新
 										(*enemyitr)->Move();
+										std::cout << static_cast<int>((*enemyitr)->GetDirection()) << std::endl;
+										break;
 									}
 								}
-								(*enemyitr)->Update();
+
 							}
 						}
 
-						if ((*enemyitr)->GetCost() == 0)
+						if ((*enemyitr)->GetCost() < 0)
 						{
 							first_move_end = true;
 						}
