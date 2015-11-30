@@ -7,6 +7,8 @@ struct UI{
 class Ui{
 private:
 	Font font = Font("res/meiryo.ttc");
+	Texture tx,tx2;
+	Media se, se2;
 	int font_size = 40;
 	UI command_board;
 	UI command;

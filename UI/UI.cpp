@@ -2,6 +2,10 @@
 
 Ui::Ui(){
 	font.size(font_size);
+	tx = Texture("res/Texture/cursol.png");
+	tx2 = Texture("res/Texture/UI.png");
+	se = Media("res/Media/button02b.wav");
+	se2 = Media("res/Media/select02.wav");
 	animation = 0;
 	angle = 0;
 	instruction = 0;
@@ -15,8 +19,8 @@ Ui::Ui(){
 	status_board.pos = Vec2f(-660, -540);
 	status_board.size = Vec2f(1660, 300);
 
-	command.pos = Vec2f(-950, 440);
-	command.size = Vec2f(70, 50);
+	command.pos = Vec2f(-950, 430);
+	command.size = Vec2f(75, 70);
 }
 
 void Ui::Update(){
@@ -29,12 +33,15 @@ void Ui::Draw(Status status){
 	drawFillBox(command_board.pos.x(), command_board.pos.y(),
 		command_board.size.x(), command_board.size.y(),
 		Color::red);
+	drawTextureBox(command_board.pos.x(), command_board.pos.y() - 400, command_board.size.x(), command_board.size.y() + 800, 0, 0, 256, 256, tx2, Color::white);
+	drawTextureBox(command.pos.x()+animation, command.pos.y(), command.size.x(), command.size.y(), 0, 0, 256, 256, tx, Color::blue);
+	///drawTextureBox(command_board.pos.x() , command_board.pos.y()-400, command_board.size.x(), command_board.size.y()+800, 0, 0, 256, 256, tx2, Color::white);
 	drawFillBox(status_board.pos.x(), status_board.pos.y(),
 		status_board.size.x(), status_board.size.y(),
 		Color::blue);
-	drawFillBox(command.pos.x() + animation, command.pos.y(),
+	/*drawFillBox(command.pos.x() + animation, command.pos.y(),
 		command.size.x(), command.size.y(),
-		Color::white);
+		Color::white);*/
 	font.draw("ActiveNo." + std::to_string(number),
 		Vec2f(-WIDTH / 3, -250 - font_size), Color::white);
 	font.draw("体力　　　　" + std::to_string(status.hp),
@@ -147,22 +154,26 @@ void Ui::OperateCursor(){
 	if (action == false){
 		if (instruction > 0){
 			if (env.isPushKey('W')){
+				se2.play();
 				instruction--;
 				command.pos.y() += 150;
 			}
 		}
 		if (instruction < 5){
 			if (env.isPushKey('S')){
+				se2.play();
 				instruction++;
 				command.pos.y() -= 150;
 			}
 		}
 		if (number > 1){
 			if (env.isPushKey('A')){
+				se2.play();
 				number--;
 			}
 		}
 		if (env.isPushKey('D')){
+			se2.play();
 			number++;
 		}
 	}
@@ -173,8 +184,8 @@ void Ui::Select(){
 		switch (instruction)
 		{
 		case 0:
+			se.play();
 			action = true;
-
 			break;
 		case 1:
 			AttakPlayer();

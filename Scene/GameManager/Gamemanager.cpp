@@ -86,7 +86,7 @@ void Gamemanager::Setup(){
 	}
 
 
-	ui_.SetPlayerCost(10);
+	ui_.SetPlayerCost(20);
 	ui_.SetUnitNum(1);
 	turn = true;
 }
@@ -108,7 +108,7 @@ void Gamemanager::Update(){
 			{
 
 				if ((*itr)->GetNum() == ui_.GetUnitNum()){
-
+					
 					ui_.SetUnitPos((*itr)->GetPos());
 					ui_.SetPDir((*itr)->GetDirection());
 					ui_.OperatePlayer();
